@@ -86,7 +86,7 @@ Notepad++:
    3. For automatic analysis of deployment results, SHIFT-F6 -> "Higlight" -> write in the first three rows the next table. Henceforward, a double-click on the underlined line in the log is going to directly open the file and position on the error.
 
 |1|2|3|4|5|6|7|8|  
-| --- | --- | --- | --- | --- | --- | --- | --- |
+|---| --- | --- | --- | --- | --- | --- | --- |
 | ☑ |[Info*At line %L%, column %C%, file '%A%'* | 00 | 00 | FF | ☐ | ☑ | ☑ | ☑ |
 *At line %L%, column %C%, file '%A%'*
 FF
