@@ -2,10 +2,10 @@ This article describes how to install and verify the prerequisites for developin
 
 Contents:
 
-* [Install prerequisites](#install-prerequisites)
-* [Verify the prerequisites](#verify-the-prerequisites)
-* [Configure your text editor for DSL scripts (*.rhe)](#configure-your-text-editor-for-dsl-scripts-rhe)
-* [Read next](#read-next)
+- [Install prerequisites](#install-prerequisites)
+- [Verify the prerequisites](#verify-the-prerequisites)
+- [Configure your text editor for DSL scripts (*.rhe)](#configure-your-text-editor-for-dsl-scripts-rhe)
+- [Read next](#read-next)
 
 ## Install prerequisites
 
@@ -78,6 +78,78 @@ Notepad++:
 
 1. Download the [RhetosNppSyntaxHighlight.xml](https://raw.githubusercontent.com/Rhetos/RhetosNPP/master/RhetosNppSyntaxHighlight.xml) file from <https://github.com/Rhetos/RhetosNPP>.
 2. Open "Notepad++" => Menu "Language" => "Define your language" => Click "Import..." => Select the downloaded XML file.
+3. For direct deployment of DSL scripts from Notepad++(only for the development enviorment):
+   1. Install the *Nppexec* plugin (Plugins -> Plugin Manages ->...).
+   2. F6 -> enter the trayectory to "ApplyPackages.bat" inside the Rhetos server (or DeployPackages.exe if its done in the testing enviorment without Rhetos source), for example 
+      "C:\Projects\Core\Rhetos\Source\Rhetos\ApplyPackages.bat", click "Save...", write in "ApplyPackages.bat". Henceforward that action can be executed directly with CTRL-F6.
+      * Note: If you run DeployPackages.exe instead off ApplyPackages.bat, it is needed before the call to change the current folder to the folder that contains that exe.
+   3. For automatic analysis of deployment results, SHIFT-F6 -> "Higlight" -> write in the first three rows the next table. Henceforward, a double-click on the underlined line in the log is going to directly open the file and position on the error.
+
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| ☑ |[Info*At line %L%, column %C%, file '%A%'* | 00 | 00 | FF | ☐ | ☑ | ☑ | ☑ |
+*At line %L%, column %C%, file '%A%'*
+FF
+00
+00
+☐
+☑
+☑
+☑
+*Exception*
+FF
+00
+00
+☐
+☑
+☐
+☑
+*FAILED*
+FF
+00
+00
+☐
+☑
+☐
+☑
+[Error]*
+FF
+00
+00
+☐
+☑
+☐
+☑
+[Info]*
+00
+00
+FF
+☐
+☑
+☐
+☑
+[Trace] Done.
+00
+FF
+00
+☐
+☑
+☐
+☑
+*SUCCESSFULLY COMPLETED*
+00
+FF
+00
+☐
+☑
+☐
+☑
+* at * in %A%:line %L%
+00
+00
+00
+☐
+☐
+☑
 
 SublimeText3:
 
