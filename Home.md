@@ -45,9 +45,11 @@ Fundamentals:
 * [Development environment setup](Development-Environment-Setup)
 * [Rhetos DSL syntax](Rhetos-DSL-syntax)
 * [Creating Rhetos package](Creating-Rhetos-package)
-* [Rhetos RESTful web API plugin](https://github.com/Rhetos/RestGenerator/blob/master/Readme.md)
+* [Rhetos RESTful web API plugin](https://github.com/Rhetos/RestGenerator/blob/master/Readme.md), [Set up HTTPS](Setting-up-Rhetos-for-HTTPS)
 * [User authentication and authorization](User-authentication-and-authorization)
 * [Data migration](Data-migration)
+* [Logging](Logging)
+* [Debugging](Debugging)
 * [TemplaterReport](TemplaterReport)
 * [Rhetos coding standard](Rhetos-coding-standard)
 
