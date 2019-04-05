@@ -85,8 +85,9 @@ Notepad++:
       * Note: If you run DeployPackages.exe instead off ApplyPackages.bat, it is needed before the call to change the current folder to the folder that contains that exe.
    3. For automatic analysis of deployment results, SHIFT-F6 -> "Higlight" -> write in the first three rows the next table. Henceforward, a double-click on the underlined line in the log is going to directly open the file and position on the error.
 
-| ☑ |[Info At line %L%, column %C%, file '%A%' | 00 | 00 | FF | ☐ | ☑ | ☑ |
+|   |   |   |   |   |  |  |  |
 |--- | --- | --- | --- | --- | --- | --- | --- |
+| ☑ |[Info At line %L%, column %C%, file '%A%' | 00 | 00 | FF | ☐ | ☑ | ☑ |
 | ☑ |*At line %L%, column %C%, file '%A%'* | FF | 00 | 00 | ☐ | ☑ | ☑ |
 | ☑ |*Exception* | FF | 00 | 00 | ☐ | ☑ | ☐ |
 | ☑ | *FAILED* | FF | 00 | 00 | ☐ | ☑ | ☐ |
@@ -96,7 +97,7 @@ Notepad++:
 | ☑ |*SUCCESSFULLY COMPLETED* | 00 | FF | 00 | ☐ | ☑ | ☐ |
 | ☑ | at * in %A%:line %L% | 00 | 00 | 00 | ☐ | ☐ | ☑ |
 
-1. For additional comfort while working you can download the plug-in QuickText [here](https://sourceforge.net/projects/quicktext/?source=dlp). The plug-in enables you to define and use shortcuts in programming which the plug-in replaces with complete expressions. For example "ss" replace with "ShortString" and so on.
+1. For additional comfort while working you can download the plug-in QuickText [here](https://sourceforge.net/projects/quicktext/?source=dlp). The plug-in enables you to define and use shortcuts in programming which the plug-in replaces with complete expressions. For example replace "ss" with "ShortString" and so on.
 
 SublimeText3:
 
