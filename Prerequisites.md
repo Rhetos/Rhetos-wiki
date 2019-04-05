@@ -85,7 +85,7 @@ Notepad++:
       * Note: If you run DeployPackages.exe instead off ApplyPackages.bat, it is needed before the call to change the current folder to the folder that contains that exe.
    3. For automatic analysis of deployment results, SHIFT-F6 -> "Higlight" -> write in the first three rows the next table. Henceforward, a double-click on the underlined line in the log is going to directly open the file and position on the error.
 
-|  |  |  |  |  |  |  |  |  |
+| Name | Name  | Name | Name | Name | Name | Name | Name |  
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | ☑ |[Info*At line %L%, column %C%, file '%A%'* | 00 | 00 | FF | ☐ | ☑ | ☑ | ☑ |
 *At line %L%, column %C%, file '%A%'*
