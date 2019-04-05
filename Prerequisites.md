@@ -88,62 +88,15 @@ Notepad++:
 | ☑ |[Info At line %L%, column %C%, file '%A%' | 00 | 00 | FF | ☐ | ☑ | ☑ |
 |--- | --- | --- | --- | --- | --- | --- | --- |
 | ☑ |*At line %L%, column %C%, file '%A%'* | FF | 00 | 00 | ☐ | ☑ | ☑ |
-☑
-*Exception*
-FF
-00
-00
-☐
-☑
-☐
-☑
-*FAILED*
-FF
-00
-00
-☐
-☑
-☐
-☑
-[Error]*
-FF
-00
-00
-☐
-☑
-☐
-☑
-[Info]*
-00
-00
-FF
-☐
-☑
-☐
-☑
-[Trace] Done.
-00
-FF
-00
-☐
-☑
-☐
-☑
-*SUCCESSFULLY COMPLETED*
-00
-FF
-00
-☐
-☑
-☐
-☑
-* at * in %A%:line %L%
-00
-00
-00
-☐
-☐
-☑
+| ☑ |*Exception* | FF | 00 | 00 | ☐ | ☑ | ☐ |
+| ☑ | *FAILED* | FF | 00 | 00 | ☐ | ☑ | ☐ |
+| ☑ | [Error]* | FF | 00 | 00 | ☐ | ☑ | ☐ |
+| ☑ | [Info]* | 00 | 00 | FF | ☐ | ☑ | ☐ |
+| ☑ | [Trace] Done. | 00 | FF | 00 | ☐ | ☑ | ☐ |
+| ☑ |*SUCCESSFULLY COMPLETED* | 00 | FF | 00 | ☐ | ☑ | ☐ |
+| ☑ | at * in %A%:line %L% | 00 | 00 | 00 | ☐ | ☐ | ☑ |
+
+1. For additional comfort while working you can download the plug-in QuickText [here](https://sourceforge.net/projects/quicktext/?source=dlp). The plug-in enables you to define and use shortcuts in programming which the plug-in replaces with complete expressions. For example "ss" replace with "ShortString" and so on.
 
 SublimeText3:
 
