@@ -33,7 +33,7 @@ Rhetos uses declarative programming that decreases need for using of imperative 
 
 System architecture:
 
- Format: ![Ovdje ide slika](url)
+ Format: ![Rhetos- System Architecture](https://github.com/stjepanantolovic/Rhetos-wiki/blob/master/images/Rhetos%20-System%20Architecture.png)
  
 
 User access client's web application, that is being developed with MVC in Visual Studio, using Internet browser. Client application does not communicate with database base directly, but thru Rhetos servis. Rhetos generates system business logic and database. Business logic layer (web servis) is exposed thru API so it can be reached directly with outside applications. Rhetos serialize everything to JSON, and is being run on IIS. Web servis contains .dll files that can be referenced directly (not just thru Rhetos), but this is being done during development only, not in production. Rhetos/bin/Generated folder contains generated .dll files that contain business logic: RestService.dll containing code of all service and exposes business logic to API, and ServerDom files: 
