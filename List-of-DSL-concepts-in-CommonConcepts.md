@@ -78,8 +78,36 @@ More concepts:
   * Creates composable filter **ActiveItems** with the optional **ItemID** parameter. Filter returns all active records with the given ID record depending on the status of the entity. Usefull for implementation of lookup.
     * Because of the bug at the new REST Api, while having "filters" as parameter, it is required to specify full filter name (assembly qualified name): "Rhetos.Dom.DefaultConcepts.ActiveItems, Rhetos.Dom.DefaultConcepts.Interfaces".
   * GenericRepository has ability to InsertOrUpdateOrDeleteOrDeactiveate which can be used to deactivate deleted records.
-  * **DenyUserEdit** `<Entity>` - Entity with hardcoded data. It is not allowd to make changes using web interface (REST/SOAP).
+  * **DenyUserEdit** `<Entity>` - Entity with hardcoded data. It is not allowed to make changes using web interface (REST/SOAP).
   * **DenyUserEdit** `<Property>` - Not allowed to edit field values using web interface (REST/SOAP). Remark: It is considered not good practice to combine fields at the same entity, which user can and cannot edit. It is recommended to separate those calculated fields on the entity extension.
+
+## Calculations
+Basic calculation types:
+* **Computed** `<Module>.<name> <repository => C# script ... Result[]>`
+* **SqlQueryable** `<Module>.<name> <SQL script>` - Queryable calculation, defined inside SQL script. Creates new view by given script in database. This concept should use SqlDependsOn concept so the database objects could be created by required order.
+
+Additional concepts:
+* **QueryableExtension** `<Module>.<name> <source DataStructure> <(IQueryable<source> source, repository) => ... IQueryable<Result>>` - Extension concept which defines easier calculations like aggregate data on the header of the document, financial consequence of document item and simmilar. Types which are returned by expression should have ID field (=sourceItem.ID) and Base (=sourceItem).
+* **ExternalReference** `<Module>.<type or assembly>` - Adds required dll reference for compilation of the object model. Dll can be set on two ways:
+ * (Recommended) By C# type which is used (set assembly qualified name). Assembly Qualified Name should not contain Version, Culture or PublicKeyToken if it is custom dll. It should contain only if it is .NET framework type.
+ * By dll name (e.g. 'rhetos.MyFunctions.dll').
+* **UseExecutionContext** `<calculation>` - Enables IExecutionContext parameter for calculations.
+
+Saving calculated data:
+* **Persisted** `<Module.<name> <source DataStructure>` - Creates database table which will contain data from the source. Source can be some of the calculations or any other data structure (e.g. Browse). 
+* **AllProperties** `<Persisted>` - Enables persistance of all calculated properties. Additionaly transfers indexes and cascade delete defines and Extends concept.
+* **KeepSyncronized** `<Persisted>`
+* **KeepSyncronized** `<Persisted> safe filter: (IE<DS> items, repository) => IE<DS> Items'` - Saves updates only for the records which are filtered.
+* **ComputeForNewBaseItems**
+
+Defining interdependent calculations so the **KeepSynchronized** can know when to update cached data:
+* **ChangesOnBaseItem** `<calculation>` If the calculation is extension of some entity, then some calculated records depend od related base entity
+* **ChangesOnLinkedItems** `<calculation <reference property>` - If calculation is extension of some entity, then some calculated records depent on entites which are referenced base document.
+ * E.g. if you are calculating additional data about the document and that data depends on some document item (e.g. item number or total amount) then it is required to reference the property of that item. That will result in recalculation of some items on the related document which is referenced by the item.
+* **ChangesOnChangedItems** `<calculation> <entity> <filter name> <entity[] changedItems => .. filter parameters>` - Programmable concept for defining related calculated items. Filter has to be implemented in the data structure of the calculation and persisted data structure which will contain saved calculation. FilterAll and System.Guid[] are commonly used filters supported by all entites.
+ * E.g. if some change of entiy needs to be recalculated, it can be used this way: `ChangesOnChangedItems Test.Item 'FilterAll' changedItems => new FilterAll()';`
+ * E.g. ChangesOnLinkedItems should be implemented by ChangesOnChagnedItems this way: `ChangesOnChangedItems Test.Item 'System.Guid[]' 'changedItems => changedItems.Where(item => item.HeaderID.HasValue).Select(item => item.HeaderID.Value).Distinct().ToArray()';`
+
 
 
 
