@@ -108,6 +108,18 @@ Defining interdependent calculations so the **KeepSynchronized** can know when t
  * E.g. if some change of entiy needs to be recalculated, it can be used this way: `ChangesOnChangedItems Test.Item 'FilterAll' changedItems => new FilterAll()';`
  * E.g. ChangesOnLinkedItems should be implemented by ChangesOnChagnedItems this way: `ChangesOnChangedItems Test.Item 'System.Guid[]' 'changedItems => changedItems.Where(item => item.HeaderID.HasValue).Select(item => item.HeaderID.Value).Distinct().ToArray()';`
 
+## Filters
+* **FilterBy** `<DataStructure>.'<Parameter>''(repository, parameter) => ... filtered DataStructure[]'`
+* **ComposableFilterBy** `<DataStructure>.'<Paramterer>''(IQ<DataStructure> items, repository, parameter) => ... filtered IQ<DS>items'`
+
+Additional concepts:
+* **ItemFilter** `<DataStructure>.'<FilterName>''item => ... bool'` - helper concept for simplified definition of simple filters (Creates ComposableFilterBy).
+* **Parameter** - Data structure used as filter parameter. Usually represents filter name too. Altought any data structure can be used as filter parameter, this helper concept is usefull for more descriptive DSL writing.
+* **UseExecutionContext** `<FilterBy>` - Enables IExecutionContext additional filter parameter.
+* **FilterByReferenced** `<DetailDataStructure>.'<Parameter>'<Parent reference>'IE<Detail> => .. additional filter or sort from group with the same parent'` - Creates filter on the detail structure which returns data related to the filter on the parent structure. Assuming parent structure already has that filter defined.
+* **FilterByLinkedItems** `<ParentDataStructure>.'<Parameter>'<detail referene>'` - Creates filter on the parent structure which returs data related to the filter on the detail structure. Assuming detail structure already has defined filter.
+
+Beside these explicitly defined filters, generic filters are available trough REST service and SOAP web interfaces on all ceoncept which are queryable. (Entity, Browse, SqlQueryable, QuerableExtension, ...)
 
 
 
