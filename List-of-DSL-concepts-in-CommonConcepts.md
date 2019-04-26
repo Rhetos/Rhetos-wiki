@@ -121,6 +121,17 @@ Additional concepts:
 
 Beside these explicitly defined filters, generic filters are available trough REST service and SOAP web interfaces on all ceoncept which are queryable. (Entity, Browse, SqlQueryable, QuerableExtension, ...)
 
-
-
-
+## Reports
+* **TemplaterReport** `<Module>.<name>'file path' - Spire templater report.
+ * Enables generating and downloading of report trough SOAP interface (DownloadRportCommand).
+ * **REMARK:** This concept is not implemented inside CommonConcepts package. It is required to include "TemplaterReport" DSL package.
+ * Report is also a data structure. Properties on the report represent report parameters.
+ * File path should be formed like: 'package name\file name', because file could end up in subfolder.
+ * Supported file types are doc, docx, xls and xlsx.
+ * Supports download in original and pdf format.
+* **Data Sources** `<Report>.'comma separated data structures'` - Provide data sourcces in ordered list. It is not required to provide module name.
+ * Each provided data source should have filter implementation with parameter named same as the report.
+ * It is recommended to use FilterByBase, FilterByReferenced and FilterByLinkeditems how to avod redundant writing of simmilar filter on related structures (e.g. documents and related items which are shown on the report).
+* **DataSource** `<Report>.'order' <DataStructure>` - Not required to use, it is simpler through DataSources macro concept .
+* **ConvertFormat** `<Report>.'format'` - Subset of functionalities from TemplaterReport: only data download without file generating. On the object model repository, only GetReportData function is generated. This concept can be used with DataSources.
+* **ReportFile** `<Module>.<name> '(object[][] reportData, string convertFormat, executionContext) => .. code for generating Rhetos.Dom.DefaultConcepts.ReportFile {string Name, byte[] Content}'` - Simmilar like TemplaterReport, only instead of Spire templater, custom file generating code is used from downloaded data. This concept is implemented in CommonConcepts package.
