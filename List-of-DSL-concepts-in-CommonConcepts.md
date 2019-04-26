@@ -84,7 +84,7 @@ More concepts:
 ## Calculations
 Basic calculation types:
 * **Computed** `<Module>.<name> <repository => C# script ... Result[]>`
-* **SqlQueryable** `<Module>.<name> <SQL script>` - Queryable calculation, defined inside SQL script. Creates new view by given script in database. This concept should use SqlDependsOn concept so the database objects could be created by required order.
+* **SqlQueryable** `<Module>.<name> <SQL script>` - Queryable calculation, defined inside SQL script. Creates new database view by the given script. This concept should be used with SqlDependsOn concept, so the database objects could be created at required order.
 
 Additional concepts:
 * **QueryableExtension** `<Module>.<name> <source DataStructure> <(IQueryable<source> source, repository) => ... IQueryable<Result>>` - Extension concept which defines easier calculations like aggregate data on the header of the document, financial consequence of document item and simmilar. Types which are returned by expression should have ID field (=sourceItem.ID) and Base (=sourceItem).
@@ -101,8 +101,8 @@ Saving calculated data:
 * **ComputeForNewBaseItems**
 
 Defining interdependent calculations so the **KeepSynchronized** can know when to update cached data:
-* **ChangesOnBaseItem** `<calculation>` If the calculation is extension of some entity, then some calculated records depend od related base entity
-* **ChangesOnLinkedItems** `<calculation <reference property>` - If calculation is extension of some entity, then some calculated records depent on entites which are referenced base document.
+* **ChangesOnBaseItem** `<calculation>` If the calculation is extension of some entity, then some calculated records depend on the related base entity
+* **ChangesOnLinkedItems** `<calculation <reference property>` - If calculation is extension of some entity, then some calculated records depend on entites which are referenced by base document.
  * E.g. if you are calculating additional data about the document and that data depends on some document item (e.g. item number or total amount) then it is required to reference the property of that item. That will result in recalculation of some items on the related document which is referenced by the item.
 * **ChangesOnChangedItems** `<calculation> <entity> <filter name> <entity[] changedItems => .. filter parameters>` - Programmable concept for defining related calculated items. Filter has to be implemented in the data structure of the calculation and persisted data structure which will contain saved calculation. FilterAll and System.Guid[] are commonly used filters supported by all entites.
  * E.g. if some change of entiy needs to be recalculated, it can be used this way: `ChangesOnChangedItems Test.Item 'FilterAll' changedItems => new FilterAll()';`
@@ -115,7 +115,7 @@ Defining interdependent calculations so the **KeepSynchronized** can know when t
 Additional concepts:
 * **ItemFilter** `<DataStructure>.'<FilterName>''item => ... bool'` - helper concept for simplified definition of simple filters (Creates ComposableFilterBy).
 * **Parameter** - Data structure used as filter parameter. Usually represents filter name too. Altought any data structure can be used as filter parameter, this helper concept is usefull for more descriptive DSL writing.
-* **UseExecutionContext** `<FilterBy>` - Enables IExecutionContext additional filter parameter.
+* **UseExecutionContext** `<FilterBy>` - Enables IExecutionContext as additional filter parameter.
 * **FilterByReferenced** `<DetailDataStructure>.'<Parameter>'<Parent reference>'IE<Detail> => .. additional filter or sort from group with the same parent'` - Creates filter on the detail structure which returns data related to the filter on the parent structure. Assuming parent structure already has that filter defined.
 * **FilterByLinkedItems** `<ParentDataStructure>.'<Parameter>'<detail referene>'` - Creates filter on the parent structure which returs data related to the filter on the detail structure. Assuming detail structure already has defined filter.
 
