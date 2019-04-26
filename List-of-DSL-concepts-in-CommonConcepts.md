@@ -122,7 +122,7 @@ Additional concepts:
 Beside these explicitly defined filters, generic filters are available trough REST service and SOAP web interfaces on all ceoncept which are queryable. (Entity, Browse, SqlQueryable, QuerableExtension, ...)
 
 ## Reports
-* **TemplaterReport** `<Module>.<name>'file path' - Spire templater report.
+* **TemplaterReport** `<Module>.<name>'file path'` - Spire templater report.
  * Enables generating and downloading of report trough SOAP interface (DownloadRportCommand).
  * **REMARK:** This concept is not implemented inside CommonConcepts package. It is required to include "TemplaterReport" DSL package.
  * Report is also a data structure. Properties on the report represent report parameters.
