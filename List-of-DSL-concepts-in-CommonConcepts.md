@@ -135,3 +135,16 @@ Beside these explicitly defined filters, generic filters are available trough RE
 * **DataSource** `<Report>.'order' <DataStructure>` - Not required to use, it is simpler through DataSources macro concept .
 * **ConvertFormat** `<Report>.'format'` - Subset of functionalities from TemplaterReport: only data download without file generating. On the object model repository, only GetReportData function is generated. This concept can be used with DataSources.
 * **ReportFile** `<Module>.<name> '(object[][] reportData, string convertFormat, executionContext) => .. code for generating Rhetos.Dom.DefaultConcepts.ReportFile {string Name, byte[] Content}'` - Simmilar like TemplaterReport, only instead of Spire templater, custom file generating code is used from downloaded data. This concept is implemented in CommonConcepts package.
+
+## Complex concepts
+* **Hierarchy** `<DataStructure>.<Name>` - Generates recursive reference to itself. Sets name of Reference property. Additionaly generates and maintains persistent data to quickly handle given hierarchy.
+  * Calculated data containing fields: Level (depth of each element in the tree), LeftIndex and RightIndex (for quick tree search).
+  * Calculated data can be used from the entity as extension (e.g. item.Extension: `<EntityName><HierarchyName>`Hierarchy.Level).
+  * On the given entity, ComposableFilter "`<HierarchyName>`HierarchyDescendants" with ID (Guid) parameter is generated, which can be used for quick access of all direct and indirect child records. Also filter "`<HierarchyName>`HierarchyAncestors" is being generated, for accessing all direct and indirect parents.
+* ** Hierarchy** `<DataStructure>.<Name> <PathName> <PathProperty> <PathSeparator>` - With standard Hierarchy functionality, this concepts additionaly calculates path for data record.
+ * Path is generated with values from PathProperty. PathProperty can be name of the property or path to some referenced data (like Browse).
+ * Path is saved within existing extension (Extension_`<EntityName><HierarchyName>`Hierarchy, inside property with the givin name `<PathName>`.
+* **SingleRoot** `<Hierarchy>` - Limits insert to only one root record.
+* **History** `<Entity>` - Includes logging of old entity version inside new entity with sufix "_History". 
+ * **AllProperties** `<History> ` - Includes logging of old versions for all properties.
+ * **History** `<Property>` - Includes logging of old versions for selected property. If History concept is added to the property, it doesn't have to be added on the entity itself. This concept can be added to more properties.
