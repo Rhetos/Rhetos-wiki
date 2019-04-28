@@ -141,10 +141,21 @@ Beside these explicitly defined filters, generic filters are available trough RE
   * Calculated data containing fields: Level (depth of each element in the tree), LeftIndex and RightIndex (for quick tree search).
   * Calculated data can be used from the entity as extension (e.g. item.Extension: `<EntityName><HierarchyName>`Hierarchy.Level).
   * On the given entity, ComposableFilter "`<HierarchyName>`HierarchyDescendants" with ID (Guid) parameter is generated, which can be used for quick access of all direct and indirect child records. Also filter "`<HierarchyName>`HierarchyAncestors" is being generated, for accessing all direct and indirect parents.
-* ** Hierarchy** `<DataStructure>.<Name> <PathName> <PathProperty> <PathSeparator>` - With standard Hierarchy functionality, this concepts additionaly calculates path for data record.
+* **Hierarchy** `<DataStructure>.<Name> <PathName> <PathProperty> <PathSeparator>` - With standard Hierarchy functionality, this concepts additionaly calculates path for data record.
  * Path is generated with values from PathProperty. PathProperty can be name of the property or path to some referenced data (like Browse).
  * Path is saved within existing extension (Extension_`<EntityName><HierarchyName>`Hierarchy, inside property with the givin name `<PathName>`.
 * **SingleRoot** `<Hierarchy>` - Limits insert to only one root record.
 * **History** `<Entity>` - Includes logging of old entity version inside new entity with sufix "_History". 
  * **AllProperties** `<History> ` - Includes logging of old versions for all properties.
  * **History** `<Property>` - Includes logging of old versions for selected property. If History concept is added to the property, it doesn't have to be added on the entity itself. This concept can be added to more properties.
+
+## Server actions
+* **Action** `<Module>.<name> <parameter, repository, userInfo) => {...C# script }>` - Server action which runs C# script. Can be started trough REST and SOAP interfaces. It can have parameters: Action which is DataStructure, so it can have properties added to it, which are used as C# script parameters.
+ * **UseExecutionContext**  `<Action>` - Enables using of additional IExecutionContext argument: (parameter, repository, userInfor, executionContext) => ...
+ 
+## Claims and permissions
+* **DenySave** `<DataStructure>.<filter name> <message> <Property>` - Restricts data recording for the given property by included filter (filter has to return incorrect data). 
+* **Lock** `<DataStructure>.<filter name> <message> <property>` - Restricts editing or deleting data for the given property by included filter (filter should return locked records). 
+* **CustomClaim** `'<custom resource name>''<custom action or claim righ>'` - Additional claim which can be given to the selected users and domain groups through standard permissions interface, checked by IAuthorizaionManager. Should be defined outside Module structure. E.g. `CustomClaim 'ProjectName.HomePage' 'AllMenuItemsVisible';`
+* **RowPermissions** - Restricts access for selected users by defined subset data of some entity. Documentation: https://github.com/Rhetos/Rhetos/wiki/RowPermissions-concept
+ 
