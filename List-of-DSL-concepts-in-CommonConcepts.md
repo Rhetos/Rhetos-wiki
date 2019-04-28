@@ -158,4 +158,26 @@ Beside these explicitly defined filters, generic filters are available trough RE
 * **Lock** `<DataStructure>.<filter name> <message> <property>` - Restricts editing or deleting data for the given property by included filter (filter should return locked records). 
 * **CustomClaim** `'<custom resource name>''<custom action or claim righ>'` - Additional claim which can be given to the selected users and domain groups through standard permissions interface, checked by IAuthorizaionManager. Should be defined outside Module structure. E.g. `CustomClaim 'ProjectName.HomePage' 'AllMenuItemsVisible';`
 * **RowPermissions** - Restricts access for selected users by defined subset data of some entity. Documentation: https://github.com/Rhetos/Rhetos/wiki/RowPermissions-concept
+
+## SQL objects
+This concepts are used only as workaround, for features that are not directly supported in Rhetos:
+
+* **SqlProcedure** `<Module>.<Name> <ProcedureArguments> <ProcedureSource>`
+* **SqlTrigger** `<DataStructure>.<Name> <Events> <TriggerSource>`
+* **SqlFunction** `<Module>.<Name> <Arguments> <RETURNS ... AS ... function source>`
+* **SqlView** `<Module>.<Name> <ViewSource>`
+* **SqlIndex** 
+* **SqlIndexMultiple**
+* **SqlDefault** - Sets default constraint to the related database column. This concepts is used only for internal functionality implemented in SQL procedures and triggers. This concept cannot be used as default field value whithin data recording through Rhetos server, because server always records NULL value for empty field value.
+* **SqlObject** `<Module>.<Name> <CreateSQL> <RemoveSQL>` - Way of generating other unsupported objects, e.g. full-text search. Documentation: https://github.com/Rhetos/Rhetos/wiki/SqlObject-concept.
+
+Rhetos framework does not parse SQL scripts, so it cannot define order of creating SQL views and triggers. To achieve that, these concepts should be used:
+
+* **SqlDependsOn** - Defines concept interdependence so the objects can be created by required order during deployment. Target can be module, entity or property.
+* **SqlDepentsOnView**
+* **SqlDependsOnFunction**
+* **SqlDependsOnSqlObject**
+* **PrerequisiteAllProperties**
+* **AutodetectSqlDependencies** `<Module>` - Detects and generated dependencies (SqlDependsOn) for SqlQueryable, SqlView, SqlFunction, SqlProcedure, SqlTrigger and LegacyEntity view. It may be applied to any of those objects or to a whole module.
+* **AutodetectSqlDependencies** `<Sql*>`
  
