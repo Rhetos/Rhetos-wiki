@@ -2,16 +2,14 @@
 Create a collection for recording all requests. This will simplify and speed up testing of the application.
 First choose the authentication type - NTLM, and enter your domain data:
 
-[[images/postman-image1.png|Postman image 1]]
+![Postman image 1](images/postman-image1.png)
 
 The image below shows the fields used for testing. Using the left dropdown menu you can select the desired HTTP method (GET, POST, PUT, DELETE, etc.), while the center field should contain the server URL (server resource). When the desired method and URL have been entered, hit Send to send the request.
 
-[[images/postman-image2.png|Postman image 2]]
+If your request updates the database, then you should select *Body -> raw* and set the format to JSON.
 
-If your request updates the database, then you should select *Body -> raw* and set the format to JSON:
-
-[[images/postman-image2.png|Postman image 2]]
-[[images/postman-image3.png|Postman image 3]]
+![Postman image 2](images/postman-image2.png)
+![Postman image 3](images/postman-image3.png)
 
 The request is sent to Rhetos through a REST service in the following format: `{Rhetos server URL}/Rest/{Module}/{Entity}/`
 Image 3 shows accessing the SustavZaNabavu application through the REST service, and then accessing the module SustavZaNabavu and its entity Adresa. At the the end `/` needs to be added for accessing the resource: `http://localhost/BookstoreRhetosServer/rest/Bookstore/Book/`
@@ -47,7 +45,7 @@ If we want to fetch the given address, the address ID needs to be added in the U
 
 When accessing specific data from the database, the URL should not end with `/`. When deleting from the database, you should select the DELETE method and send the ID of the wanted record in the JSON format. This ID also needs to be inserted in the REST request URL, wrapped in curly brackets. See image below:
 
-[[images/postman-image4.png|Postman image 4]]
+![Postman image 4](images/postman-image4.png)
 
 All of the errors can also be found in the `Rhetos/RhetosServer.log` file.
 You should create all of the requests for test data insertion and save them in a collection. At the top of the Postman screen there is a Runner option which is used for running the whole collection at once.
