@@ -21,7 +21,7 @@ Entities which contain references to other entities are stored in the database w
 ```
 Entity Book
 {
-	ShortString Code { AutoCode; }
+    ShortString Code { AutoCode; }
     ShortString Title { Required; }
     Integer NumberOfPages;
     Reference Author Bookstore.Person;
