@@ -52,7 +52,7 @@ More concepts:
 * **LookupVisible** `<Property>` - Sets given property as default browse structure for entity lookup (name of browse struxture is "`<EntityName>`Lookup"). If default browse structure is not existent, it will be created. LookupVisible can be used on the reference, which in that case adds Guid to the browse structure and on all LookupVisible fields from the referenced entity. Default browse can be still added manually together with the rest of the fields.
   * **REMARK:** This concept is implemented inside OmegaCommonConcepts package. It is required to include that package during deployment.
 * **Clustered** Created cluster SqlIndex and SqlIndexMultiple.
-* **Polymorphic** - Defining common interface which implements more entities. Documentation: https://github.com/Rhetos/Rhetos/wiki/Polymorphic-concept
+* **Polymorphic** - Defining common interface which implements more entities. Documentation: <https://github.com/Rhetos/Rhetos/wiki/Polymorphic-concept>
 
 ## Simple business logic
 
