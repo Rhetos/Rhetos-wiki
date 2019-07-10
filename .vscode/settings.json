@@ -10,5 +10,10 @@
         "latex",
         "md",
         "markdown"
-    ]
+    ],
+    "editor.rulers": [
+        80,
+        100
+    ],
+    "markdown.extension.toc.orderedList": true
 }

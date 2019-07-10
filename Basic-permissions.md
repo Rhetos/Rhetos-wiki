@@ -19,7 +19,7 @@ The following diagram shows the Rhetos entities in the *Common* module
 that determine the user's roles and permissions.
 The diamond shapes represent the associative entities.
 
-[[images/claims.png|Roles and Claims]]
+![Roles and Claims](images/claims.png)
 
 ### Common administration activities
 
@@ -140,4 +140,4 @@ Note: The DataMigration scripts are often the first solution that comes to mind,
 
 ## See also
 
-* See other options for user authorization in the article [User authentication and authorization](https://github.com/Rhetos/Rhetos/wiki/User-authentication-and-authorization).
+* See other options for user authorization in the article [User authentication and authorization](User-authentication-and-authorization).

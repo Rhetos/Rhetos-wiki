@@ -2,10 +2,10 @@ This article describes how to install and verify the prerequisites for developin
 
 Contents:
 
-1. [Install prerequisites](#install-prerequisites)
-2. [Verify the prerequisites](#verify-the-prerequisites)
-3. [Configure your text editor for DSL scripts (*.rhe)](#configure-your-text-editor-for-dsl-scripts-rhe)
-4. [Read next](#read-next)
+1. [Install prerequisites](#Install-prerequisites)
+2. [Verify the prerequisites](#Verify-the-prerequisites)
+3. [Configure your text editor for DSL scripts (*.rhe)](#Configure-your-text-editor-for-DSL-scripts-rhe)
+4. [Read next](#Read-next)
 
 ## Install prerequisites
 
@@ -111,4 +111,4 @@ The **syntax highlighting** plugins are available for the following text editors
 
 ## Read next
 
-* [Development environment setup](https://github.com/Rhetos/Rhetos/wiki/Development-environment-setup)
+* [Development environment setup](Development-environment-setup)

@@ -26,9 +26,11 @@ Tutorials:
 * Develop new features:
   * [Using the Domain Object Model](Using-the-Domain-Object-Model)
   * [Filters and other read methods](Filters-and-other-read-methods)
+  * [Data validations](Data-validations)
   * Implement new server commands: [Action concept](Action-concept)
   * Extend Rhetos DSL with you own keywords: [Rhetos concept development](Rhetos-concept-development)
-  * Low-level database development: [Database objects](Database-objects)
+  * [Low-level database development](Database-objects)
+  * [Low-level object model concepts](Low-level-object-model-concepts)
 * Business processes:
   * [Persisting the computed data](Persisting-the-computed-data)
   * Implementing entity inheritance and common interfaces: [Polymorphic concept](Polymorphic-concept)
@@ -44,6 +46,7 @@ Fundamentals:
 * [Prerequisites](Prerequisites)
 * [Development environment setup](Development-Environment-Setup)
 * [Rhetos DSL syntax](Rhetos-DSL-syntax)
+* [List of DSL concepts in CommonConcepts package](List-of-DSL-concepts-in-CommonConcepts)
 * [Creating Rhetos package](Creating-Rhetos-package)
 * [Rhetos RESTful web API plugin](https://github.com/Rhetos/RestGenerator/blob/master/Readme.md), [Set up HTTPS](Setting-up-Rhetos-for-HTTPS)
 * [User authentication and authorization](User-authentication-and-authorization)
@@ -61,7 +64,7 @@ Support:
 
 ## Recommended plugins
 
-* [CommonConcepts](https://github.com/Rhetos/Rhetos/tree/master/CommonConcepts) contains basic concepts for building applications, such as entities, validations and computations.
+* [CommonConcepts](https://github.com/Rhetos/Rhetos/tree/master/CommonConcepts) contains standard concepts for building applications, such as entities, validations and computations.
 * [ActiveDirectorySync](https://github.com/Rhetos/ActiveDirectorySync). Rhetos supports Windows Authentication by default. This package synchronizes Rhetos user roles with Active Directory, allowing user permissions to be defined by AD user groups.
 * [AspNetFormsAuth](https://github.com/Rhetos/AspNetFormsAuth), provides Forms Authentication to Rhetos applications.
 * [RestGenerator](https://github.com/Rhetos/RestGenerator) automatically generates RESTful JSON web API for all entities and other readable or writable data structures that are defined in a Rhetos application. Additionally allows executing actions and downloading reports.

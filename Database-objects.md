@@ -1,6 +1,6 @@
 # Low-level database development
 
-These concepts are used as a workaround for features that cannot be implemented with the available high-level concepts in Rhetos.
+These concepts are used as a workaround for features that cannot be implemented with the available high-level concepts.
 
 > A good rule of thumb is to *avoid* these low-level concepts if you are implementing a standard business pattern.
 > Seeing low-level concepts in DSL scripts is a sign that we are not looking at a standard feature, but **a very specific uncommon feature**.
@@ -54,24 +54,65 @@ or create a new schema for such objects.
 
 **SqlProcedure** *&lt;Module&gt;.&lt;Name&gt; &lt;ProcedureArguments&gt; &lt;ProcedureSource&gt;*
 
-```C
-SqlProcedure GenerateNextAutoCode <GenerateNextAutoCode param.sql> <GenerateNextAutoCode body.sql>;
+Example:
+
+```c
+Module Demo
+{
+    Entity Person { ShortString Name; }
+
+    SqlProcedure ComputePersonInfo
+        "@NamePattern NVARCHAR(256), @LimitResultCount INT"
+        "
+            SELECT TOP (@LimitResultCount)
+                p.ID, Name, NameLength = LEN(p.Name), PersonID = p.ID
+            FROM
+                Demo.Person p
+            WHERE
+                p.Name LIKE '%' + @NamePattern + '%'
+            ORDER BY
+                p.Name
+        ";
+}
 ```
 
-File "GenerateNextAutoCode param.sql"
+If you need to execute the stored procedure, and provide the resulting dataset in your Rhetos application,
+you can use `Computed` data structure to provide the data in the application as a standard data source
+(available in object model and REST Web API).
+The Computed object should implement a `FilterBy` method with C# code that executes the stored procedure
+with a given parameters.
 
-```SQL
-@TableOrView NVARCHAR(256),
-@ColumnName NVARCHAR(256),
-...
-```
+For example:
 
-File "GenerateNextAutoCode body.sql"
+```c
+Module Demo
+{
+    Parameter PersonFilter
+    {
+        ShortString NamePattern;
+        Integer LimitResultCount;
+    }
 
-```SQL
-BEGIN
-    ...
-END
+    Computed PersonInfo 'repository => { throw new Rhetos.UserException("Use filter \"Demo.PersonFilter\" to read the data."); }'
+    {
+        ShortString Name;
+        Integer NameLength;
+        Guid PersonID;
+
+        FilterBy PersonFilter
+            '(repository, parameter) =>
+            {
+                // Always separate parameters to prevent SQL injection.
+                string sql = "EXEC Demo.ComputePersonInfo @p0, @p1";
+                var sqlParams = new object[] { parameter.NamePattern, parameter.LimitResultCount };
+
+                var result = _executionContext.EntityFrameworkContext.Database
+                    .SqlQuery<Demo.PersonInfo>(sql, sqlParams)
+                    .ToArray();
+                return result;
+            }';
+    }
+}
 ```
 
 ## SqlTrigger
@@ -184,7 +225,7 @@ getdate()
 **SqlObject** *&lt;Module&gt;.&lt;Name&gt; &lt;CreateSQL&gt; &lt;RemoveSQL&gt;* -
   Use this to create other database objects that are not supported by the other concepts, for example: full-text search index.
 
-See the full documentation at [SqlObject concept](https://github.com/Rhetos/Rhetos/wiki/SqlObject-concept).
+See the full documentation at [SqlObject concept](SqlObject-concept).
 
 ```C
 Module Demo
@@ -244,4 +285,4 @@ Other concepts for defining dependencies are rarely used, when **AutoDetectSqlDe
 
 ## See also
 
-* [SqlObject concept](https://github.com/Rhetos/Rhetos/wiki/SqlObject-concept)
+* [SqlObject concept](SqlObject-concept)

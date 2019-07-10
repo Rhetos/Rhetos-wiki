@@ -17,21 +17,22 @@ Prerequisites:
 
 Contents:
 
-1. [Filters](#filters)
-   1. [ItemFilter concept](#itemfilter-concept)
-   2. [Testing a filter](#testing-a-filter)
-   3. [ItemFilter with related data and subquery](#itemfilter-with-related-data-and-subquery)
-   4. [ComposableFilterBy concept](#composablefilterby-concept)
-   5. [ComposableFilterBy with parameters](#composablefilterby-with-parameters)
-   6. [Predefined filters](#predefined-filters)
-2. [Other read methods](#other-read-methods)
-   1. [FilterBy concept](#filterby-concept)
-   2. [Query concept](#query-concept)
-3. [Development guidelines and advanced topics](#development-guidelines-and-advanced-topics)
-   1. [When not to write filters](#when-not-to-write-filters)
-   2. [Additional data from other repositories and the context](#additional-data-from-other-repositories-and-the-context)
-   3. [Filter name is the parameter type](#filter-name-is-the-parameter-type)
-   4. [Combining filters and other read methods](#combining-filters-and-other-read-methods)
+1. [Filters](#Filters)
+   1. [ItemFilter concept](#ItemFilter-concept)
+   2. [Testing a filter](#Testing-a-filter)
+   3. [ItemFilter with related data and subquery](#ItemFilter-with-related-data-and-subquery)
+   4. [ComposableFilterBy concept](#ComposableFilterBy-concept)
+   5. [ComposableFilterBy with parameters](#ComposableFilterBy-with-parameters)
+   6. [Predefined filters](#Predefined-filters)
+2. [Other read methods](#Other-read-methods)
+   1. [FilterBy concept](#FilterBy-concept)
+   2. [Query concept](#Query-concept)
+3. [Development guidelines and advanced topics](#Development-guidelines-and-advanced-topics)
+   1. [When not to write filters](#When-not-to-write-filters)
+   2. [Using additional data or system components in filters](#Using-additional-data-or-system-components-in-filters)
+   3. [Filter name is filter parameter type](#Filter-name-is-filter-parameter-type)
+   4. [Combining filters and other read methods](#Combining-filters-and-other-read-methods)
+4. [Read next](#Read-next)
 
 ## Filters
 
@@ -80,7 +81,7 @@ The **ItemFilter** has two parameters: filter name and lambda expression.
 - In C# lambda expressions, the argument name (`book` or `item`) can be any C# identifier.
   For convention, we usually use `item`.
 
-The `CommonMisspelling` filter is additionally used for a data validation
+The `CommonMisspelling` filter is additionally used for a [data validation](Data-validations)
 that will deny the _save_ operation if the user enters an invalid book name.
 **Both filters** can be used by a client application (or in the object model)
 to query a subset of the books.
@@ -554,7 +555,7 @@ information in the filter is a code smell.
 
 - To limit the data based on the user's permissions, use [RowPermissions concept](RowPermissions-concept).
 
-### Additional data from other repositories and the context
+### Using additional data or system components in filters
 
 For all filters and read methods, their code snippets can use the members of the repository class.
 
@@ -571,7 +572,7 @@ To easily use other system components (with dependency injection),
 new repository members can be added to any data structure's repository class
 with the [RepositoryUses concept](Low-level-object-model-concepts).
 
-### Filter name is the parameter type
+### Filter name is filter parameter type
 
 All filters and other read methods have a _name_ that is same as
 the _class_ in the object model that provides the filter parameters.

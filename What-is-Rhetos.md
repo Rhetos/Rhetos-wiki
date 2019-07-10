@@ -10,11 +10,11 @@ Rhetos works as a compiler that **generates the business application** from the 
 * The database is not generated from scratch on each deployment, it is upgraded instead, carefully protecting the existing data.
 * Rhetos application generator could be used for application scaffolding, but its real strength is utilized when using DSL scripts as the *source* and never manually modifying the generated code.
 
-[[images/Rhetos-4tier.png|Rhetos 4tier]]
+![Rhetos 4tier](images/Rhetos-4tier.png)
 
 Rhetos comes with the *CommonConcepts* DSL package, a programming language extension that contains many ready-to-use features for building applications.
 
-[Syntax highlighting](https://github.com/Rhetos/Rhetos/wiki/Development-Environment-Setup#configure-your-text-editor-for-dsl-scripts-rhe) is available for Visual Studio Code, SublimeText3 and Notepad++.
+[Syntax highlighting](Prerequisites#Configure-your-text-editor-for-DSL-scripts-rhe) is available for Visual Studio Code, SublimeText3 and Notepad++.
 
 ## Why was Rhetos created
 
@@ -55,7 +55,7 @@ The basic principles:
 
 ## Rhetos DSL
 
-[[images/dsl-example.png|DSL example]]
+![DSL example](images/dsl-example.png)
 
 Rhetos DSL (a programming language) is a set of **concepts** - the **keywords** in the DSL scripts.
 
