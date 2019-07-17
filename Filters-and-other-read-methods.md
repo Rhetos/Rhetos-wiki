@@ -82,9 +82,14 @@ The **ItemFilter** has two parameters: filter name and lambda expression.
   For convention, we usually use `item`.
 
 The `CommonMisspelling` filter is additionally used for a [data validation](Data-validations)
+<<<<<<< HEAD
 that will deny the _save_ operation if the user enters an invalid book name.
-**Both filters** can be used by a client application (or in the object model)
-to query a subset of the books.
+=======
+that will deny the _save_ operation if the user enters an invalid book name.
+
+> > > > > > > glavni-wiki/master
+> > > > > > > **Both filters** can be used by a client application (or in the object model)
+> > > > > > > to query a subset of the books.
 
 - Note that the validation filter can be useful for reading data,
   even if there should be no "invalid" data in the system.
@@ -550,8 +555,8 @@ If you need to use some simple filters in your application to select the data ba
 
 Another anti-pattern is using ItemFilter or ComposableFilterBy to limit the dataset if
 the user **does not have permissions** to see all the data.
-In general, using the `_executionContext` check on the username or using any other context-sensitive
-information in the filter is a code smell.
+In general, using the `_executionContext` (username or using any other context-sensitive information)
+in the filter is a code smell.
 
 - To limit the data based on the user's permissions, use [RowPermissions concept](RowPermissions-concept).
 
@@ -677,3 +682,7 @@ The "**Example URL**" is using the entities from the [Bookstore](https://github.
 | FilterBy(param1), GenericPropertyFilter(param2) | Load(param1) => Filter(param2)<br>**WARNING**: _This is inefficient because the Load method already loaded more data from database than required._ | [rest/Bookstore/Book/?filters=[{"Filter":"Bookstore.ComplexSearch"},{"Property":"Code","Operation":"Contains","Value":"2"}]](http://localhost/BookstoreRhetosServer/rest/Bookstore/Book/?filters=[{"Filter":"Bookstore.ComplexSearch"},{"Property":"Code","Operation":"Contains","Value":"2"}]) |
 
 In the examples above, the result will be the same if you replace _ItemFilter_ with a _ComposableFilterBy_.
+
+## Read next
+
+- [Data validations](Data-validations)
