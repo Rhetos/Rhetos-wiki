@@ -151,7 +151,7 @@ Other features:
 
 Additional concepts:
 
-* **ExternalReference** `<Module>.<type or assembly>` - Adds the dll reference for the generated application. The dll can be references in two ways:
+* **ExternalReference** `<Module>.<type or assembly>` - Adds the dll reference for the generated application. The dll can be referenced in two ways:
   * (Recommended) By C# type which is used (the assembly qualified name). Version, Culture or PublicKeyToken can be removed from the AssemblyQualifiedName for dlls that are placed in the Rhetos application folder.
   * By dll name (e.g. 'Rhetos.MyFunctions.dll').
 * **UseExecutionContext** `<computation>` - Adds an additional input parameter "ExecutionContext" to the Computed or QueryableExtension lambda expression.
