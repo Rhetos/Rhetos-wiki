@@ -236,9 +236,9 @@ Additional concepts:
   The lambda expression can contain additional data processing of the filtered items: `IEnumerable<Detail> => .. additional filter or sort from group with the same parent`.
 * **FilterByLinkedItems** `<parent DataStructure>.<parameter type> <detail Reference>'` -  Copies a FilterBy filter from a detail data structure to the parent.
 * **FilterByBase** `<extension DataStructure>.<parameter type>`
-* **ApplyFilterOnClientRead** `<DataStructure>.<filterName>` - For filters that are automatically added to each client request. The given filter will be automatically applied when executing ReadCommand server command (the command is used in SOAP and REST API).
-* **ApplyFilterOnClientRead** `<DataStructure>.<filterName> 'where'` - For filters that are automatically added to each client request. The given filter will be automatically applied when executing ReadCommand server command (the command is used in SOAP and REST API).
-* **ApplyOnClientRead** `<ItemFilter or ComposableFilterBy>` - For filters that are automatically added to each client request. The given filter will be automatically applied when executing ReadCommand server command (the command is used in SOAP and REST API).
+* **ApplyFilterOnClientRead** `<DataStructure>.<filterName>` - The given filter will be automatically applied when reading data on each web request.
+* **ApplyFilterOnClientRead** `<DataStructure>.<filterName> 'where'` - The given filter will be automatically applied when reading data on each web request.
+* **ApplyOnClientRead** `<ItemFilter or ComposableFilterBy>` - The given filter will be automatically applied when reading data on each web request.
 
 Beside these explicitly defined filters, generic filters are available in [Web API](https://github.com/Rhetos/RestGenerator/blob/master/Readme.md#reading-data)
 for all queryable data structures (Entity, Browse, SqlQueryable, QueryableExtension, ...).
