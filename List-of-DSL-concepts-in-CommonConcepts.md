@@ -93,7 +93,6 @@ Property value constraints:
   * **SystemRequired** `<Property>` - The value must be entered by system internally.
   * **UserRequired** `<Property>` - User (or client applications) needs to provide the property value.
   * **RequiredAllowSave** `<Property>` - Required property, but suppress the validation on save to be verified later (see `AllowSave`).
-  * **SqlNotNull** `<Property> 'initialValueSqlExpression'` - This concept is intended for internal use only, for other concepts' implementations. Use `Required` or `SystemRequired` instead to implement business requirements.
 * **Unique** - `<Property>` - Two records cannot have same value of this property.
   * **UniqueMultiple** `<DataStructure>.<property names separated by comma>` - A unique constraint over multiple properties: Two records cannot have same combination of values.
 * **MinValue** `<Property>` - Limits the smallest allowed value of the property.
@@ -216,6 +215,7 @@ See the full article: [Developing filters and other read methods](Filters-and-ot
   The lambda expression returns an array of records: `(repository, parameter) => filtered DataStructure[]`.
   The parameter type also represents the filter name.
 * **Query** `<DataStructure>.<parameter type> 'lambda'` - It is similar to the FilterBy described above, it just returns a query instead of a simple array.
+  * **BeforeQuery** `<Query> 'codeSnippet'` - Low-level concept that adds custom code to be executed before each query.
 * **ComposableFilterBy** `<DataStructure>.<parameter type> <lambda>` - A read method that returns a filtered query for the given source query and the parameter value.
   The lambda expression returns a subset of a given query: `(IQueryable<DataStructure> query, repository, parameter) => filtered IQueryable<DataStructure>`.
   The parameter type also represents the filter name.
@@ -282,7 +282,7 @@ Hierarchy:
 
 ## Server actions
 
-See the full article: [Action concept](Action-concept).
+[Action concept](Action-concept):
 
 * **Action** `<Module>.<name> <lambda>` - A custom server action that executes the code in the given lambda expression: `(parameter, repository, userInfo) => { C# code }`.
   The properties on the action are available in the lambda expression as the first parameter.
@@ -293,95 +293,105 @@ See the full article: [Action concept](Action-concept).
 
 ## Claims and permissions
 
-* **CustomClaim** `<custom resource name> <custom action or claim right>` - Add an additional security claim.
+See more on related topics in article [User authentication and authorization](User-authentication-and-authorization).
+
+[Basic permissions](Basic-permissions):
+
+* **CustomClaim** `<custom object name> <custom action or claim right>` - Add an additional security claim.
   It can be assigned by administrator to a user or a role, and verified by IAuthorizationManager.
-  See [Basic permissions](Basic-permissions) for more info.
   Note: in the DSL script it must be placed outside of a Module.
-* [**RowPermissions**](RowPermissions-concept) - Restricts access for selected users to a subset of the entity's records.
-  * **AutoInheritRowPermissions** -  Each detail data structure in the module will inherit row permissions from it's mater data structure. Each extension in the module will inherit row permissions from it's base data structure.
-  * **AutoInheritRowPermissionsInternally** -  similar to `AutoInheritRowPermissions` but it does not inherit row permissions from other modules.
-  * **Allow** - Allows read and write access to selected records
-  * **AllowRead** - Allows read access to selected records
-  * **AllowWrite** - Allows write access to selected records
-  * **Deny** - Denies read and write access to selected records
-  * **DenyRead** - Denies read access to selected records
-  * **DenyWrite** - Denies write access to selected records
-  * Setting row permissions inheritance explicitly for selected entities
-    * **InheritFrom**
-    * **InheritFromBase** - can be used on a Browse data structures and on entities with Extends concept
-  * **SamePropertyValue** - Used for internal optimizations when a property on one data structure returns the same value
-* Base row permission concepts:
+
+[RowPermissions](RowPermissions-concept):
+
+* **RowPermissions** `<DataStructure>` - Restricts access for selected users to a subset of the entity's records.
+  * **AutoInheritRowPermissions** `<Module>` - Each detail data structure in the module will inherit row permissions from it's mater data structure. Each extension in the module will inherit row permissions from it's base data structure.
+  * **AutoInheritRowPermissionsInternally** `<Module>` - Similar to `AutoInheritRowPermissions` but it does not inherit row permissions from other modules.
+  * **Allow** `<RowPermissions>.<ruleName> 'filterExpressionFunction'` - Allow read and write access to selected records.
+  * **AllowRead** `<RowPermissions>.<ruleName> 'filterExpressionFunction'` - Allow read access to selected records.
+  * **AllowWrite** `<RowPermissions>.<ruleName> 'filterExpressionFunction'` - Allow write access to selected records.
+  * **Deny** `<RowPermissions>.<ruleName> 'filterExpressionFunction'` - Deny read and write access to selected records.
+  * **DenyRead** `<RowPermissions>.<ruleName> 'filterExpressionFunction'` - Deny read access to selected records.
+  * **DenyWrite** `<RowPermissions>.<ruleName> 'filterExpressionFunction'` - Deny write access to selected records.
+  * **InheritFrom** `<RowPermissions>.<ReferenceProperty>` - Inherits row permissions from the referenced "parent" data structure.
+  * **InheritFromBase** `<RowPermissions>` - Inherits row permissions from base data structure. Can be used on Browse or any entity with Extends.
+  * **SamePropertyValue** `<derivedProperty Property>.<path to base property>` - Optimization of generated row-permissions filter when a property of one data structure returns the same value as a property of referenced (base or parent) data structure.
+* Direct implementation of row-permissions filter:
   * **RowPermissionsRead** `<source DataStructure> 'expression'` - Direct implementation of row permission filter, without extendable rules such as AllowRead and Deny. Alternative to extendable **RowPermissions** concept.
   * **RowPermissionsWrite** `<source DataStructure> 'expression'` - Direct implementation of row permission filter, without extendable rules such as AllowRead and Deny. Alternative to extendable **RowPermissions** concept.
-
-See more on [User authentication and authorization](User-authentication-and-authorization).
 
 ## Low-level object model concepts
 
 See the full article: [Low-level object model concepts](Low-level-object-model-concepts).
 
 One of the basic principles in Rhetos framework is to allow developers to work in a classic way, coding the features directly in C# or SQL, by using the low-level concepts.
+However, a good rule of thumb is to *avoid* these low-level concepts if you are implementing a standard business pattern.
+Seeing low-level concepts in DSL scripts is a sign that we are not looking at a standard feature, but **a very specific uncommon feature**.
+For example, if the purpose of the feature is "data validation", please use the InvalidData concept instead.
 
-* **SaveMethod** - Allows developers to extend entity's Save method, by injecting a custom C# code that will be executed when saving the records (inserting, updating and deleting). There are different extension points at different positions in the Save method, that are intended for inserting a code with different purpose
-  * **ArgumentValidation** - To verify if the parameters could break the rest of the Save method's business logic. Use `OnSaveValidate` instead for standard data validations.
-  * **Initialization** - To initialize or change the data, before saving it to the database. If possible, use `DefaultValue` instead.
-  * **OldDataLoaded** - To initialize or change the data, before saving it to the database, if previous data state needs to be considered. See related LoadOldItems concept.
-  * **OnSaveUpdate** - To modify data in other dependent entities that needs to be updated (recomputed) after the current Save operation. If possible, use `ComputedFrom` instead.
-  * **OnSaveValidate** - To implement a custom data validation. If possible, use `InvalidData` instead, for standard data validations, or `RowPermissions` for user permissions.
-  * **AfterSave** - The inserted code will be executed after validations.
-  * **LoadOldItems** - Simple helper for reading an old version of the data that can be reused in different business rules. It will load the old data between `Initialization` and `OldDataLoaded`.
-* **RepositoryUses** - Adds a member property of a given type to the repository class, and initializes it automatically from the dependency injection container.
-* **RepositoryMember** -  Allows you to add an arbitrary code to the repository class body. This can simplify code reuse between multiple filters, actions and other features.
+* **SaveMethod** `<Entity>` - Allows developers to extend entity's Save method, by injecting a custom C# code that will be executed when saving the records (inserting, updating and deleting). There are different extension points at different positions in the Save method, that are intended for inserting a code with different purpose
+  * **ArgumentValidation** `<SaveMethod>.<ruleName> 'csCodeSnippet'` - Verify if the parameters could break the rest of the Save method's business logic. Use `OnSaveValidate` instead for standard data validations.
+  * **Initialization** `<SaveMethod>.<ruleName> 'csCodeSnippet'` - Initialize or change the data, before saving it to the database. If possible, use `DefaultValue` instead.
+  * **OldDataLoaded** `<SaveMethod>.<ruleName> 'csCodeSnippet'` - Initialize or change the data, before saving it to the database, if previous data state needs to be considered. See related LoadOldItems concept.
+  * **OnSaveUpdate** `<SaveMethod>.<ruleName> 'csCodeSnippet'` - Modify data in other dependent entities that needs to be updated (recomputed) after the current Save operation. If possible, use `ComputedFrom` instead.
+  * **OnSaveValidate** `<SaveMethod>.<ruleName> 'csCodeSnippet'` - Implement a custom data validation. If possible, use `InvalidData` instead, for standard data validations, or `RowPermissions` for user permissions.
+  * **AfterSave** `<SaveMethod>.<ruleName> 'csCodeSnippet'` - The inserted code will be executed after validations.
+  * **LoadOldItems** `<SaveMethod>` - Simple helper for reading an old version of the data that can be reused in different business rules. It will load the old data between `Initialization` and `OldDataLoaded`.
+    * **Take** `<LoadOldItems>.<property or path>` - Read old value of the selected property. Path over references can be used here to select a property from a referenced entity.
+* **RepositoryUses** `<DataStructure>.<propertyName> 'propertyType'` - Adds a private C# property of the given type to the repository class, and initializes it automatically from the dependency injection container.
+* **RepositoryMember** `<DataStructure>.<name> 'csCodeSnippet'` - Adds an arbitrary code to the repository class body. This can simplify code reuse between multiple filters, actions and other features.
 
 ## Database objects
 
 See the full article: [Low-level database development](Database-objects).
 
-These concepts are used as a workaround for features that cannot be implemented with the available high-level concepts.
+These concepts can be used to implement high-performance optimizations
+that require features directly implemented in database.
 
-* **SqlProcedure** `<Module>.<name> <arguments> <body>`
-* **SqlTrigger** `<Entity>.<name> <events> <body>`
-* **SqlFunction** `<Module>.<name> <arguments> <body>`
-* **SqlView** `<Module>.<name> <select statement>`
-* **SqlIndex** `<Property>`
-* **SqlIndexMultiple** `<Entity>.<list of properties>`
+* **SqlProcedure** `<Module>.<name> "arguments" "body"` - Stored procedure in database.
+* **SqlTrigger** `<Entity>.<name> "events" "body"` - Trigger in database.
+* **SqlFunction** `<Module>.<name> "arguments" "body"` - User-defined function in database (scalar, inline or table function).
+* **SqlView** `<Module>.<name> "select statement"` - View in database.
+* **SqlIndex** `<Property>` - Index on a single column in database.
+* **SqlIndexMultiple** `<Entity>.<list of properties>` - Index on one on more columns in database.
 * **Clustered** `<SqlIndexMultiple>` - Marks the index as clustered.
 * **SqlDefault** `<Property> <sql statement>` - Generates default constraint on the database column.
-  This concept is used only for internal features implemented in SQL procedures and triggers.
-  Note: It cannot be used for default field value when writing data to Web API or in object model,
-  because the saved record will always have the property value set to NULL by ORM, even if the value is not provided.
-* [**SqlObject**](SqlObject-concept) `<Module>.<name> <create sql statement> <remove sql statement>` - Create a custom database object
+  Note: This concept is used only for internal features implemented in SQL procedures and triggers.
+  It cannot be used for default field value when writing data to Web API or in object model,
+  because the saved record will always have the property value set to NULL by Entity Framework,
+  even if the value is not provided.
+* **SqlNotNull** `<Property> 'initialValueSqlExpression'` - This concept is used only for internal features implemented in SQL procedures and triggers. Use `Required` or `SystemRequired` instead to implement business requirements.
+* [**SqlObject**](SqlObject-concept) `<Module>.<name> <create SQL statement> <remove SQL statement>` - Create a custom database object
   that is not supported by other SQL concepts, for example a full-text search catalog.
 
-Dependencies between the database objects are required to make sure that they will be created in the correct order.
+Dependencies between the database objects need to be specified to make sure that they will be created in the correct order.
 Use the following concepts to define the dependencies:
 
-* **SqlDependsOn** `<dependent object> <depends on Property>` - The object should be created in database *after* the given column is created.
-* **SqlDependsOn** `<dependent object> <depends on DataStructure>` - The object should be created in database *after* the given table or view is created.
-* **SqlDependsOn** `<dependent object> <depends on Module>` - The object should be created in database *after* all database objects in the given module are created.
-* **SqlDependsOnID** `<dependent object> <depends on ID>` - Dependency on ID property. Use this instead of SqlDependsOn entity to avoid having dependencies to all properties of the entity.
-* **SqlDependsOnIndex** `<dependent object> <depends on Index>`
-* **SqlDependsOnView** `<dependent object> <depends on SqlView>`
-* **SqlDependsOnFunction** `<dependent object> <depends on SqlFunction>`
-* **SqlDependsOnSqlObject** `<dependent object> <depends on SqlObject>`
 * **AutodetectSqlDependencies** `<database object>` - Automatically detects and generates dependencies (SqlDependsOn) for the given database object, by analyzing its SQL script.
 * **AutodetectSqlDependencies** `<Module>` - Automatically detects and generates dependencies (SqlDependsOn) for all database objects in the module.
+* **SqlDependsOn** `<dependent object> <dependsOn Property>` - This object should be created in database *after* the given column is created.
+* **SqlDependsOn** `<dependent object> <dependsOn DataStructure>` - This object should be created in database *after* the given table or view, and all its columns, is created.
+* **SqlDependsOn** `<dependent object> <dependsOn Module>` - This object should be created in database *after* all database objects in the given module are created.
+* **SqlDependsOnID** `<dependent object> <dependsOn DataStructure>` - This object should be created in database *after* the given table's ID column is  created, but not necessarily all other columns. Use this instead of SqlDependsOn to avoid having dependencies to all properties of the entity.
+* **SqlDependsOnIndex** `<dependent object> <dependsOn SqlIndexMultiple>` - This object should be created in database *after* the given SqlIndex is created.
+* **SqlDependsOnView** `<dependent object> <dependsOn SqlView>` - This object should be created in database *after* the given SqlView is created.
+* **SqlDependsOnFunction** `<dependent object> <dependsOn SqlFunction>` - This object should be created in database *after* the given SqlFunction is created.
+* **SqlDependsOnSqlObject** `<dependent object> <dependsOn SqlObject>` - This object should be created in database *after* the given SqlObject is created.
 
 ## TODO
 
-BeforeQuery - New low-level concepts:BeforeQuery with parameter and BeforeAction, for injecting code in business object model.
-
+* **ImplementsQueryable** `<DataStructure>.<interfaceType>` - CLASS ImplementsQueryableInterfaceInfo.
 ImplementsQueryable - Spominje se u Migrating-Rhetos-applications-from-NHibernate-to-Entity-Framework
 
-PessimisticLockingParent
+* **PessimisticLocking** `<resource DataStructure>` - CLASS PessimisticLockingInfo.
+* **PessimisticLockingParent** `<Reference> <detail PessimisticLocking>` - CLASS PessimisticLockingParentInfo.
+
+
+* **RegisteredImplementation** `<Implements>` - CLASS RegisteredInterfaceImplementationHelperInfo. Registers the data structure (and it's repository) as the main implementation of the given interface. This allows for type-safe code in external business layer class library to have simple access to the generated data structure's class and the repository using predefined interfaces.
+* **RegisteredImplementation** `<ImplementsQueryable>` - CLASS RegisteredQueryableInterfaceImplementationHelperInfo. Registers the data structure (and it's repository) as the main implementation of the given interface. This allows for type-safe code in external business layer class library to have simple access to the generated data structure's class and the repository using predefined interfaces.
 
 RegisteredImplementation - 1 Registers the data structure (and it's repository) as the main implementation of the given interface.This allows for type-safe code in external business layer class library to have simple access to the generated data structure's class and the repository using predefined interfaces.
 2 Used for exposing repositories of an entity that implements a given interface. It helps to keep algorithm implementations out of DSL scripts by providing statically-typed querying and saving of generated object model entities without referencing the generated assembly.
 
-RelatedItem
+* **RelatedItem** `<Logging>.<table>.<column>.<relation>` - CLASS LoggingRelatedItemInfo.
 
-Write
-
-From - vezan za Browse ?
-
-useExecutionContext
+* **Write** `<DataStructure> 'saveImplementation'` - CLASS WriteInfo.
