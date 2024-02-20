@@ -112,7 +112,7 @@ in the user interface, if a simple `Browse` will not suffice.
 
 Task:
 
-> Allow the client application to get the total number of comment for a given book.
+> Allow the client application to get the total number of chapters for a given book.
 
 Solution:
 
@@ -121,16 +121,16 @@ SqlQueryable BookInfo
     "
         SELECT
             b.ID,
-            NumberOfComments = COUNT(c.ID)
+            NumberOfChapters = COUNT(c.ID)
         FROM
             Bookstore.Book b
-            LEFT JOIN Bookstore.Comment c ON c.BookID = b.ID
+            LEFT JOIN Bookstore.Chapter c ON c.BookID = b.ID
         GROUP BY
             b.ID
     "
 {
     Extends Bookstore.Book;
-    Integer NumberOfComments;
+    Integer NumberOfChapters;
 
     AutodetectSqlDependencies;
 }
@@ -151,7 +151,7 @@ The example above shows a typical usage of the **Extends** concept in the comput
 
 The **AutodetectSqlDependencies** statement will result with automatic detection
 of the dependencies by analyzing the SQL query.
-This view depends on the Book and Comment entities.
+This view depends on the Book and Chapter entities.
 That information is needed for Rhetos to know in what order these database objects should be created:
 The Book table must be created before BookInfo view because the view depends on the table.
 See [Dependencies between database objects](Database-objects#dependencies-between-database-objects)
@@ -172,7 +172,7 @@ Any string parameter can be placed in an external file and referenced from the D
 SqlQueryable BookInfo <SQL\BookInfo.sql>
 {
     Extends Bookstore.Book;
-    Integer NumberOfComments;
+    Integer NumberOfChapters;
 
     AutodetectSqlDependencies;
 }
@@ -183,10 +183,10 @@ Create a file "BookInfo.sql" in the folder `DslScripts\SQL\`, with the following
 ```SQL
 SELECT
     b.ID,
-    NumberOfComments = COUNT(c.ID)
+    NumberOfChapters = COUNT(c.ID)
 FROM
     Bookstore.Book b
-    LEFT JOIN Bookstore.Comment c ON c.BookID = b.ID
+    LEFT JOIN Bookstore.Chapter c ON c.BookID = b.ID
 GROUP BY
     b.ID
 ```
@@ -211,7 +211,7 @@ if it needs to contain some data that is computed on-the-fly.
 
 Task:
 
-> Add the NumberOfComments property from BookInfo to the BookGrid.
+> Add the NumberOfChapters property from BookInfo to the BookGrid.
 
 Solution:
 
@@ -222,7 +222,7 @@ Browse BookGrid Bookstore.Book
     Take Title;
     Take 'Author.Name';
     Take TranslatorName 'Extension_ForeignBook.Translator.Name';
-    Take NumberOfComments 'Extension_BookInfo.NumberOfComments';
+    Take NumberOfChapters 'Extension_BookInfo.NumberOfChapters';
 }
 ```
 

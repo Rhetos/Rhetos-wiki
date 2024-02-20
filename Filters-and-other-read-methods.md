@@ -124,7 +124,7 @@ ItemFilters are also useful when you need to query data from
 > Write a filter that will return books that are foreign
 > (if a record exists in the **extension** entity ForeignBook),
 > but only if the author's name starts with X (see the referenced entity Person)
-> and only if the book has at least 3 comments entered (in the **detail** entity Comment).
+> and only if the book has at least 3 chapters entered (in the **detail** entity Chapter).
 
 Solution:
 
@@ -138,10 +138,10 @@ Module Bookstore
         Integer NumberOfPages;
         Reference Author Bookstore.Person;
 
-        ItemFilter ForeignAuthorXWithComments 'item =>
+        ItemFilter ForeignAuthorXWithChapters 'item =>
             item.Author.Name.StartsWith("X")
             && item.Extension_ForeignBook.ID != null
-            && _domRepository.Bookstore.Comment.Subquery.Where(c => c.BookID == item.ID).Count() >= 3';
+            && _domRepository.Bookstore.Chapter.Subquery.Where(c => c.BookID == item.ID).Count() >= 3';
     }
 
     Entity Person
@@ -155,10 +155,10 @@ Module Bookstore
         ShortString OriginalLanguage;
     }
 
-    Entity Comment
+    Entity Chapter
     {
         Reference Book { Detail; }
-        LongString Text;
+        LongString Heading;
     }
 }
 ```
@@ -166,7 +166,7 @@ Module Bookstore
 * Expression `item.Author.Name` uses `Reference Author` from the book to read the `Name` from the `Entity Person`.
 * Expression `item.Extension_ForeignBook.ID` references the extended `Entity ForeignBook`.
   See [Entities and relationships](Data-model-and-relationships) for more info on these features.
-* Data from the detail entity `Comment` is aggregated with a **subquery**.
+* Data from the detail entity `Chapter` is aggregated with a **subquery**.
   Note that the `Subquery` property is used here, instead of the `Query()` method.
   Read more on subqueries in [Using the Domain Object Model](Using-the-Domain-Object-Model#subqueries).
 * The filter's code snippet has access to the `_domRepository` and `_executionContext` members
@@ -469,7 +469,7 @@ Module Bookstore
         Take 'Author.Name';
         Take TranslatorName 'Extension_ForeignBook.Translator.Name';
         Take Description 'Extension_BookDescription.Description';
-        Take NumberOfComments 'Extension_BookInfo.NumberOfComments';
+        Take NumberOfChapters 'Extension_BookInfo.NumberOfChapters';
 
         // This query is an alternative data source for BookGrid.
         // Instead of reading data from the `Bookstore.Book`, it provides the new data from WantedBooks.
@@ -488,7 +488,7 @@ Module Bookstore
                     AuthorName = "unknown",
                     TranslatorName = null,
                     Description = null,
-                    NumberOfComments = null
+                    NumberOfChapters = null
                 });
                 return wantedBooks;
             }';
@@ -570,7 +570,7 @@ and some other system components).
 
 * These members provide the same data as `var context` and `var repository`
 in the examples from [Using the Domain Object Model](Using-the-Domain-Object-Model).
-* See `ItemFilter ForeignAuthorXWithComments` above for the example usage of `_domRepository`.
+* See `ItemFilter ForeignAuthorXWithChapters` above for the example usage of `_domRepository`.
 
 To easily use other system components (with dependency injection),
 new repository members can be added to any data structure's repository class

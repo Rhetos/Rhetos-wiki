@@ -89,9 +89,9 @@ For example, expand the previous task solution with the following requirements:
 
 > * Book also has an author.
 >   Book's author is a *Person*.
-> * Each book can have multiple comments.
->   Each *Comment* contains just a simple text.
->   The comments are considered as part of the book:
+> * Each book can have multiple chapters.
+>   Each *Chapter* contains just a heading (a short text).
+>   The chapters are considered as part of the book (a detail entity):
 >   they are displayed and entered with other book's properties at the same form
 >   by the same user.
 
@@ -113,10 +113,10 @@ Module Bookstore
         ShortString Name;
     }
 
-    Entity Comment
+    Entity Chapter
     {
         Reference Book { Detail; }
-        LongString Text;
+        LongString Heading;
     }
 }
 ```

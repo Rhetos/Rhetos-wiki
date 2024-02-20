@@ -288,14 +288,14 @@ There are different kinds of filters that can be used here.
     ```C#
     // Generic property filter:
     var filter1 = new FilterCriteria("Title", "StartsWith", "B");
-    repository.Bookstore.Book.Query(filter1).Dump();
+    repository.Bookstore.Book.Query(filter1).ToList().Dump();
 
     // IEnumerable of generic filters:
     var filter2 = new FilterCriteria("Title", "Contains", "ABC");
     var manyFilters = new[] { filter1, filter2 };
     var filtered = repository.Bookstore.Book.Query(manyFilters);
     filtered.ToString().Dump(); // The SQL query contains both filters.
-    filtered.ToSimple().Dump();
+    filtered.ToSimple().ToList().Dump();
     ```
 
 Note that the examples above will work on both **Load** and **Query** methods.
@@ -342,38 +342,38 @@ WHERE
 
 ### Subqueries
 
-The query in the following example is expected to return the books that have at least one comment,
+The query in the following example is expected to return the books that have at least one chapter,
 but there is an issue with the query interpretation.
 
 ```C#
-var booksWithComments = repository.Bookstore.Book.Query()
-    .Where(book => repository.Bookstore.Comment.Query()
-        .Any(comment => comment.BookID == book.ID));
+var booksWithChapters = repository.Bookstore.Book.Query()
+    .Where(book => repository.Bookstore.Chapter.Query()
+        .Any(chapter => chapter.BookID == book.ID));
 
-booksWithComments.Select(book => book.Title).Dump();
+booksWithChapters.Select(book => book.Title).Dump();
 ```
 
 The code above will result with **NotSupportedException**:
 "LINQ to Entities does not recognize the method ... Query() ...".
-The Entity Framework 6.1 does not support usage of custom methods (`Comment.Query()`) for a subquery.
+The Entity Framework 6.1 does not support usage of custom methods (`Chapter.Query()`) for a subquery.
 
 There are two approaches to solve this with the subquery:
 
 **Option A)** Separate the inner query to a variable. For example:
 
 ```C#
-var comments = repository.Bookstore.Comment.Query();
-var booksWithComments = repository.Bookstore.Book.Query()
-    .Where(book => comments
-        .Any(comment => comment.BookID == book.ID));
+var chapters = repository.Bookstore.Chapter.Query();
+var booksWithChapters = repository.Bookstore.Book.Query()
+    .Where(book => chapters
+        .Any(chapter => chapter.BookID == book.ID));
 ```
 
 **Option B)** Use the `Subquery` property to avoid the limitation:
 
 ```C#
-var booksWithComments = repository.Bookstore.Book.Query()
-    .Where(book => repository.Bookstore.Comment.Subquery
-        .Any(comment => comment.BookID == book.ID));
+var booksWithChapters = repository.Bookstore.Book.Query()
+    .Where(book => repository.Bookstore.Chapter.Subquery
+        .Any(chapter => chapter.BookID == book.ID));
 ```
 
 Note that in both solutions above, this code will execute a *single* SQL query in the database:
@@ -390,7 +390,7 @@ FROM
 WHERE
     EXISTS (SELECT
         1 AS [C1]
-        FROM [Bookstore].[Comment] AS [Extent2]
+        FROM [Bookstore].[Chapter] AS [Extent2]
         WHERE [Extent2].[BookID] = [Extent1].[ID]
     )
 ```
