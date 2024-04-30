@@ -140,7 +140,7 @@ DSL script.
 2. Extend the Rhetos services configuration (at `builder.Services.AddRhetosHost`)
    with Rhetos REST plugin components: `.AddRestApi(o => o.BaseRoute = "rest")`
 
-3. **Before** line `app.MapControllers()` or `app.UseEndpoints`, add `app.UseRhetosRestApi();`
+3. Add `app.UseRhetosRestApi();` **before** the existing lines `app.MapControllers`, `app.UseEndpoints` or `app.UseSwagger`.
 
 Test the generated REST API:
 

@@ -41,7 +41,8 @@ Table of contents:
 
 ## Hard-to-Detect incompatibilities
 
-* Using `updatedOld.Zip(updated` in **OnSaveUpdate** or **OnSaveValidate** concept
+* (This only applies to Rhetos version up to v5, it is fixed in v6)
+  Using `updatedOld.Zip(updated` in **OnSaveUpdate** or **OnSaveValidate** concept
   (or other concepts that inject code at OnSave1Tag or OnSave2Tag)
   will result with nondeterministic behavior. The `updated` variable at that moment contains a LINQ query,
   not an array, so the order or elements might not match the `updatedOld` array.

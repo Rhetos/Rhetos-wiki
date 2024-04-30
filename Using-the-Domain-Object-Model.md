@@ -350,7 +350,7 @@ var booksWithChapters = repository.Bookstore.Book.Query()
     .Where(book => repository.Bookstore.Chapter.Query()
         .Any(chapter => chapter.BookID == book.ID));
 
-booksWithChapters.Select(book => book.Title).Dump();
+booksWithChapters.Select(book => book.Title).ToList().Dump();
 ```
 
 The code above will result with **NotSupportedException**:
