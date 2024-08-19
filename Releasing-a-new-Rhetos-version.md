@@ -14,7 +14,7 @@ This article describes the release process for both Rhetos framework (<https://g
       ```text
       SET Prerelease=
       ```
-    * [ ] Run full build in the command prompt: `Clean.bat && Build.bat && Test.bat`.
+    * [ ] Run full build in the command prompt: `call Clean.bat && call Build.bat && call Test.bat`.
       * Some Rhetos packages don't contain Clean.bat or Test.bat.
     * [ ] Verity that the build is successful: the console output should end with "Test.bat SUCCESSFULLY COMPLETED.".
     * [ ] [Rhetos v4 and earlier] In the *Install* subfolder: zip the *RhetosServer* folder

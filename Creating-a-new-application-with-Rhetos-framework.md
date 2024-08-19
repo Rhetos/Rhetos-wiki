@@ -15,7 +15,7 @@ test it, and later add some additional features in other tutorial articles.
   from simple libraries to ASP.NET Core web applications.
 
 > OTHER VERSIONS OF RHETOS:
-This article applies to **Rhetos v5** and later versions.
+This article applies to **Rhetos v5 and later** versions.
 For older versions see a corresponding article for
 [Rhetos v4](Creating-new-WCF-Rhetos-application),
 [Rhetos v3](Create-your-first-Rhetos-application)
@@ -169,13 +169,16 @@ Each Rhetos application needs it's own database.
       "RhetosConnectionString": "Data Source=ENTER_SQL_SERVER_NAME;Initial Catalog=ENTER_RHETOS_DATABASE_NAME;Integrated Security=SSPI;"
    }
    ```
+   
+   * Note that if SQL Server instance name contains a backslash character (`\`), you need to write it
+     in a JSON file with another backslash (escape sequence), for example `Data Source=localhost\\SQL2019`.
 
-> Note:
+> Note for production applications:
 The connection string is placed in `appsettings.json` to simplify this tutorial.
 In practice, it should not included in the application's source for security reasons
 and better configuration management.
-For example, the connection string may be placed in a separate environment-specific file
-(`local.settings.json`, e.g.)
+For example, the connection string may be placed in environment variables, or in a separate
+environment-specific file (`local.settings.json`, e.g.)
 that will not be added to Visual Studio project nor committed to the source repository (use .gitignore),
 so that it can be configured separately for each developer and each test/production environment.
 
