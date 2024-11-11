@@ -279,6 +279,9 @@ This is an example from the [Bookstore](https://github.com/Rhetos/Bookstore) dem
 EXEC Rhetos.DataMigrationUse 'Bookstore', 'Topic', 'ID', 'uniqueidentifier';
 EXEC Rhetos.DataMigrationUse 'Bookstore', 'Topic', 'Code', 'nvarchar(256)';
 EXEC Rhetos.DataMigrationUse 'Bookstore', 'Topic', 'Name', 'nvarchar(256)';
+
+IF (OBJECT_ID('tempdb..#codes') IS NOT NULL)
+    DROP TABLE #codes;
 GO
 
 SELECT
@@ -300,6 +303,27 @@ FROM
     INNER JOIN #codes c ON c.ID = t.ID
 
 EXEC Rhetos.DataMigrationApplyMultiple 'Bookstore', 'Topic', 'ID, Code';
+```
+
+Depending on the use case, there are other issues to be considered when migrating
+the existing data in a column that is unique in the new version of the application.
+
+For example, if there are duplicate existing records, you might use ROW_NUMBER()
+or simply NEWID() to generate a unique suffix for the existing duplicated codes.
+
+Additionally, if the column is an `integer`, and there are some existing records with entered values,
+the new generated codes should continue from the maximal existing numeric value.
+In that case the migration script might have the following structure.
+Note that it uses `@maxExisting + ROW_NUMBER()` when generating the new values.
+
+```sql
+DECLARE @maxExisting int; -- The new codes will continue after the maximal existing code.
+SELECT @maxExisting = NULLIF(MAX(t.Code), 0) FROM _Bookstore.Topic t;
+
+SELECT
+    t.ID,
+    NewCode = CAST(@maxExisting + ROW_NUMBER() OVER (ORDER BY t.Name, t.ID)
+...
 ```
 
 ### Changing a property's type
