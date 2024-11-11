@@ -170,8 +170,8 @@ http://myapplication/Bookstore/Book/?filters=[{"Filter":"LargeBooks5"}]`
 **Load**, **Query**, **Filter** and **QueryFilter** methods can be implemented directly in C#,
 without writing any C# code snippets in DSL scripts.
 
-**Step 1.** Write the concept in DSL script without the code snippet, for example `QueryFilter OldBooks`
-with the corresponding `Parameter OldBooks`. We will add the code later.
+**Step 1.** Write the concept in DSL script without the code snippet, for example `QueryFilter ShortTitle`
+with the corresponding `Parameter ShortTitle`. We will add the code later.
 
 ```c
 Module Bookstore
@@ -181,16 +181,16 @@ Module Bookstore
         ShortString Title;
         Integer NumberOfPages;
 
-        QueryFilter OldBooks;
+        QueryFilter ShortTitle;
     }
 
-    Parameter OldBooks;
+    Parameter ShortTitle { Integer Limit; }
 }
 ```
 
 **Step 2.** Build the project. It should result with the following error, which is expected:
 
-CS8795 `Partial method 'Book_Repository.Filter(IQueryable<Bookstore_Book>, OldBooks)' must have an implementation part because it has accessibility modifiers.`
+CS8795 `Partial method 'Book_Repository.Filter(IQueryable<Bookstore_Book>, ShortTitle)' must have an implementation part because it has accessibility modifiers.`
 
 Rhetos has now generated the Filter method **prototype** in the partial class Book_Repository,
 which we will implement.
@@ -222,7 +222,7 @@ namespace Bookstore.Repositories
 {
     public partial class Book_Repository
     {
-        public partial IQueryable<Bookstore_Book> Filter(IQueryable<Bookstore_Book> query, OldBooks parameter)
+        public partial IQueryable<Bookstore_Book> Filter(IQueryable<Bookstore_Book> query, ShortTitle parameter)
         {
             throw new System.NotImplementedException();
         }
@@ -230,6 +230,7 @@ namespace Bookstore.Repositories
 }
 ```
 
-Now, you can remove the line with NotImplementedException and implemented the filter directly in C# class.
+Now, you can remove the line with `NotImplementedException` and implemented the filter directly in C# class,
+for example `return query.Where(b => b.Title.Length <= parameter.Limit);`.
 
-The `QueryFilter OldBooks` from DSL script will call this method directly.
+The `QueryFilter ShortTitle;` from DSL script will automatically call this method directly.
