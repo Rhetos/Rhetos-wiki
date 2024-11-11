@@ -1,5 +1,11 @@
 # Reading, querying and filtering data
 
+Contents:
+
+1. [Data sources](#data-sources)
+2. [Loading, querying and filtering methods with parameters](#loading-querying-and-filtering-methods-with-parameters)
+3. [Direct implementation in C#, without code snippets is DSL scripts](#direct-implementation-in-c-without-code-snippets-is-dsl-scripts)
+
 ## Data sources
 
 Basic components in Rhetos apps are called data structures.
@@ -15,7 +21,7 @@ For each readable data structure, Rhetos will generate:
 
 1. a **POCO class** - Simple class with properties that describe the data structure, for example Bookstore.Book.
 2. a **repository class** - It contains methods for reading data, writing data and other business rules (validations, computations and other data processing), for example Book_Repository.
-3. a navigation class - This is a derivation of the POCO class, with additional references to other related entites. This class is used with Entity Framework queries. The class is named Bookstore_Book to allow all modules in a single namespace to avoid ORM issues.
+3. a navigation class - This is a derivation of the POCO class, with additional references to other related entities. This class is used with Entity Framework queries. The class is named Bookstore_Book to allow all modules in a single namespace to avoid ORM issues.
 
 **All repository classes implement the same interfaces**, in order to unify the different types of data sources. This helps developer to modify the implementation without affecting the usage. For example, when replacing a LINQ query with an SQL query, the other code that uses it remains the same, and the **web API** for reading the data source is unchanged.
 
@@ -26,7 +32,7 @@ Entity Book // Generats a table in database.
 {
   ShortString Title;
   Integer NumberOfPages;
-};
+}
 
 SqlQueryable BookSales // Generates an SQL view in database.
   "SELECT book.ID, Description = book.Title + ' ' + author.Name, book.Price
@@ -136,7 +142,7 @@ The choice between different reading/filtering methods depends on performance co
 The **C# interfaces** and **web API** for reading the data is **the same** for all of the methods above.
 Examples:
 
-```
+```cs
 C#:
 var books = repository.Bookstore.Book.Load(new LargeBooks1 { MinimumPages = 500 });
 var books = repository.Bookstore.Book.Load(new LargeBooks2 { MinimumPages = 500 });
@@ -158,3 +164,72 @@ http://myapplication/Bookstore/Book/?filters=[{"Filter":"LargeBooks3","Value":{"
 http://myapplication/Bookstore/Book/?filters=[{"Filter":"LargeBooks4","Value":{"MinimumPages":500}}]&sort=Title&Top=20`
 http://myapplication/Bookstore/Book/?filters=[{"Filter":"LargeBooks5"}]`
 ```
+
+## Direct implementation in C#, without code snippets is DSL scripts
+
+**Load**, **Query**, **Filter** and **QueryFilter** methods can be implemented directly in C#,
+without writing any C# code snippets in DSL scripts.
+
+**Step 1.** Write the concept in DSL script without the code snippet, for example `QueryFilter OldBooks`
+with the corresponding `Parameter OldBooks`. We will add the code later.
+
+```c
+Module Bookstore
+{
+    Entity Book // Generats a table in database.
+    {
+        ShortString Title;
+        Integer NumberOfPages;
+
+        QueryFilter OldBooks;
+    }
+
+    Parameter OldBooks;
+}
+```
+
+**Step 2.** Build the project. It should result with the following error, which is expected:
+
+CS8795 `Partial method 'Book_Repository.Filter(IQueryable<Bookstore_Book>, OldBooks)' must have an implementation part because it has accessibility modifiers.`
+
+Rhetos has now generated the Filter method **prototype** in the partial class Book_Repository,
+which we will implement.
+
+**Step 3.** Create the C# file to implement the filter method. The recommended convention is to create
+the .cs file next to the corresponding .rhe file.
+For example, if the entity is implemented in `Book.rhe`, create `Book.cs` in the same source folder
+(you can use Add -> Class helper in VS).
+
+**Step 4.** Write the partial class for the entity's repository class.
+It should look like the following code, with adjusted namespace and entity name (`Bookstore` and `Book` in this example).
+
+```cs
+namespace Bookstore.Repositories
+{
+    public partial class Book_Repository
+    {
+        partial
+    }
+}
+```
+
+When you press *space* and then *tab* after the `partial` keyword in the class,
+the Visual Studio IntelliSense should offer to complete the method implementation,
+including all input and output parameters:
+
+```cs
+namespace Bookstore.Repositories
+{
+    public partial class Book_Repository
+    {
+        public partial IQueryable<Bookstore_Book> Filter(IQueryable<Bookstore_Book> query, OldBooks parameter)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+}
+```
+
+Now, you can remove the line with NotImplementedException and implemented the filter directly in C# class.
+
+The `QueryFilter OldBooks` from DSL script will call this method directly.
