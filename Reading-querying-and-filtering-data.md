@@ -97,8 +97,8 @@ Each data source can have multiple methods of **reading data: loading, querying 
 | -- | -- | -- |
 | Load LargeBooks | `IEnumerable<Book> Load(LargeBooks parameter)` | FilterBy |
 | Query LargeBooks | `IQueryable<Bookstore_Book> Query(LargeBooks parameter)` | Query |
-| Filter LargeBooks | `IEnumerable<Book> Filter(IEnumerable<>, LargeBooks parameter)` | none |
-| QueryFilter LargeBooks | `IQueryable<Bookstore_Book> Filter(IQueryable<>, LargeBooks parameter)` | ComposableFilterBy |
+| Filter LargeBooks | `IEnumerable<Book> Filter(IEnumerable<Book> items, LargeBooks parameter)` | none |
+| QueryFilter LargeBooks | `IQueryable<Bookstore_Book> Filter(IQueryable<Bookstore_Book> query, LargeBooks parameter)` | ComposableFilterBy |
 
 Examples:
 
@@ -198,9 +198,9 @@ which we will implement.
 **Step 3.** Create the C# file to implement the filter method. The recommended convention is to create
 the .cs file next to the corresponding .rhe file.
 For example, if the entity is implemented in `Book.rhe`, create `Book.cs` in the same source folder
-(you can use Add -> Class helper in VS).
+(you can use *Add* => *Class* helper in VS).
 
-**Step 4.** Write the partial class for the entity's repository class.
+**Step 4.** In the created file write the partial class for the entity's repository class.
 It should look like the following code, with adjusted namespace and entity name (`Bookstore` and `Book` in this example).
 
 ```cs
@@ -213,7 +213,7 @@ namespace Bookstore.Repositories
 }
 ```
 
-When you press *space* and then *tab* after the `partial` keyword in the class,
+When you press ***space*** and then ***tab*** after the `partial` keyword in the class,
 the Visual Studio IntelliSense should offer to complete the method implementation,
 including all input and output parameters:
 
@@ -230,7 +230,7 @@ namespace Bookstore.Repositories
 }
 ```
 
-Now, you can remove the line with `NotImplementedException` and implemented the filter directly in C# class,
+Now, you can remove the line with `NotImplementedException` and implement the filter directly in the C# class,
 for example `return query.Where(b => b.Title.Length <= parameter.Limit);`.
 
 The `QueryFilter ShortTitle;` from DSL script will automatically call this method directly.
