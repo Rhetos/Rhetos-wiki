@@ -140,24 +140,28 @@ The choice between different reading/filtering methods depends on performance co
 - When backend application need to generate some data with a complex algorithm implemented in C#, the common approach is a `Computed` data source with `Load` methods to handle parameters if needed.
 
 The **C# interfaces** and **web API** for reading the data is **the same** for all of the methods above.
-Examples:
+For example, all five different loading/filtering concepts can be used in the same way when reading from
+*repository* classes:
 
 ```cs
-C#:
-var books = repository.Bookstore.Book.Load(new LargeBooks1 { MinimumPages = 500 });
-var books = repository.Bookstore.Book.Load(new LargeBooks2 { MinimumPages = 500 });
-var books = repository.Bookstore.Book.Load(new LargeBooks3 { MinimumPages = 500 });
-var books = repository.Bookstore.Book.Load(new LargeBooks4 { MinimumPages = 500 });
-var books = repository.Bookstore.Book.Load(new LargeBooks5()));
+var books1 = repository.Bookstore.Book.Load(new LargeBooks1 { MinimumPages = 500 });
+var books2 = repository.Bookstore.Book.Load(new LargeBooks2 { MinimumPages = 500 });
+var books3 = repository.Bookstore.Book.Load(new LargeBooks3 { MinimumPages = 500 });
+var books4 = repository.Bookstore.Book.Load(new LargeBooks4 { MinimumPages = 500 });
+var books5 = repository.Bookstore.Book.Load(new LargeBooks5()));
 
 // `Query LargeBooks2` and `QueryFilter LargeBooks4` support queryable data sources
 // what can be efficiently used with additional filters, that will be combined into a single SQL query to read the data.
-var books = repository.Bookstore.Book.Query(new LargeBooks2 { MinimumPages = 500 })
+var books2b = repository.Bookstore.Book.Query(new LargeBooks2 { MinimumPages = 500 })
   .Where(book => book.Author.Name.StartWith("R"))
   .OrderBy(book => book.Title)
   .Take(10).ToList();
+```
 
-HTTP GET:
+All five filters generate similar API (examples for HTTP GET).
+Additionally, queryable methods (LargeBooks2 and LargeBooks4) support combining multiple filters and paging.
+
+```
 http://myapplication/Bookstore/Book/?filters=[{"Filter":"LargeBooks1","Value":{"MinimumPages":500}}]`
 http://myapplication/Bookstore/Book/?filters=[{"Filter":"LargeBooks2","Value":{"MinimumPages":500}}]&sort=Title&Top=20`
 http://myapplication/Bookstore/Book/?filters=[{"Filter":"LargeBooks3","Value":{"MinimumPages":500}}]`
