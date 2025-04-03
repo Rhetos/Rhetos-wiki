@@ -23,7 +23,8 @@ Contents:
 3. [Inheriting row permissions](#inheriting-row-permissions)
    1. [Solution 1](#solution-1)
    2. [Solution 2](#solution-2)
-   3. [Optimizing inherited row permissions](#optimizing-inherited-row-permissions)
+   3. [Combining inherited row permissions and directly specified row permissions](#combining-inherited-row-permissions-and-directly-specified-row-permissions)
+   4. [Optimizing inherited row permissions](#optimizing-inherited-row-permissions)
 4. [Client side - Reading data with row permissions](#client-side---reading-data-with-row-permissions)
    1. [Reading all documents (access denied)](#reading-all-documents-access-denied)
    2. [Reading the user's documents](#reading-the-users-documents)
@@ -292,6 +293,14 @@ Module DemoRowPermissions2
 * **InheritFromBase** can be used on a **Browse** data structures and on entities with **Extends** concept.
 * **InheritFrom** concept's parameter is the full name of `DocumentComment` entity's
   reference property (`Reference Document`) that references the "parent" entity with row permissions that will be inherited.
+
+### Combining inherited row permissions and directly specified row permissions
+
+If the entity inherits row permissions, and also has some row permissions specified
+directly on the entity, the result will be a combination of both sets of rules.
+
+For example, "Allow" row permission are combined to allow access to the union of
+the specified records (logical "OR").
 
 ### Optimizing inherited row permissions
 
