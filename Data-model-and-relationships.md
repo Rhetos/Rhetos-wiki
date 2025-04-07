@@ -139,7 +139,7 @@ and the referenced entity is in the same module.
 
 `Detail` concept can be added on a Reference property when the dependent entity is considered
 **a part of** the parent entity from the business perspective.
-Usually this means that the user will enter the data together on the same form.
+Usually this means that the user will enter the data in parent and detail entities together on the same form.
 
 * This will automatically add `Required` (detail cannot exist without parent),
   `CascadeDelete` and `SqlIndex` on the Reference property.
