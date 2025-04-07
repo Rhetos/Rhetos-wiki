@@ -30,11 +30,11 @@ Tutorials:
   * [Implementing simple business rules](Implementing-simple-business-rules)
   * [Read-only data structures](Read-only-data-structures)
   * [Simple read-only entities and code tables (Hardcoded)](simple-read-only-entities-and-codetables)
-* Develop new features with standard Rhetos patterns:
-  * [Using the Domain Object Model](Using-the-Domain-Object-Model)
+* Data processing with Rhetos repository classes:
+  * [Using the Domain Object Model](Using-the-Domain-Object-Model) (repository classes)
   * [Filters and other read methods](Filters-and-other-read-methods)
   * [Data validations](Data-validations)
-* Develop new features with custom code:
+* Develop new features:
   * Implement new server commands: [Action concept](Action-concept)
   * Add custom database objects: [Low-level database development](Database-objects)
   * Add custom C# code to Rhetos repository classes: [Low-level object model concepts](Low-level-object-model-concepts)
