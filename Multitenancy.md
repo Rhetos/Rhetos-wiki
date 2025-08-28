@@ -37,6 +37,13 @@ that resolves the connection string at runtime for each tenant:
    that shares the same engine and version as the tenants' databases.
 
 ```cs
+using Autofac;
+using Rhetos;
+using Rhetos.MsSqlEf6.CommonConcepts;
+using Rhetos.Utilities;
+using System;
+using System.ComponentModel.Composition;
+
 [Export(typeof(Module))]
 public class MultiTenantAutofacModule : Module
 {
