@@ -1,8 +1,10 @@
-This article applies to Rhetos v5 and later versions.
-For older versions see the corresponding article for [Rhetos v4 and older](Releasing-a-new-Rhetos-version-v4.md).
+This article applies to **Rhetos v4 and older** versions.
+For newer versions see the corresponding article for
+[Rhetos v5](Releasing-a-new-Rhetos-version.md).
 
-This article describes the release process for both **Rhetos framework** (<https://github.com/Rhetos/Rhetos>)
-and **Rhetos plugins** (most of the other repositories in <https://github.com/Rhetos>).
+This article describes the release process for both Rhetos framework (<https://github.com/Rhetos/Rhetos>)
+and Rhetos plugins (most of the other repositories in <https://github.com/Rhetos>).
+Steps that are applied only to Rhetos framework release are marked with [Framework only].
 
 1. Before you start:
     * [ ] Make sure you are working on the latest version of the master branch (git pull).
@@ -21,21 +23,27 @@ and **Rhetos plugins** (most of the other repositories in <https://github.com/Rh
     * [ ] Run full build in the command prompt: `call Clean.bat && call Build.bat && call Test.bat`.
       * Some Rhetos packages don't contain Clean.bat or Test.bat.
     * [ ] Verity that the build is successful: the console output should end with "Test.bat SUCCESSFULLY COMPLETED.".
+    * [ ] [Rhetos v4 and earlier] In the *Install* subfolder: zip the *RhetosServer* folder
+          to *RhetosServer.&lt;NEW VERSION&gt;.zip* (for example RhetosServer.1.2.0.zip).
 3. Publish:
+    * [ ] [Private builds only] Copy the generated files from the Install folder to your company's shared storage.
     * [ ] Commit your repository changes, **except Build.bat file**, with comment "Release &lt;NEW VERSION&gt;.".
       For example "Release 1.2.0.".
       * Note: If there is nothing to commit, simply do the next step on the last commit.
     * [ ] In your repository create a new tag "v&lt;NEW VERSION&gt;" at the last commit ("Release ...").
       For example "v1.2.0".
     * [ ] Push your repository to GitHub (set the option *Include Tags*).
+    * [ ] [Private builds only] Publish the new NuGet package to your company's NuGet gallery (ask your system administrator for the location).
     * [ ] Publish the generated NuGet package(s) to the public [NuGet gallery](https://www.nuget.org/packages/manage/upload) from the *dist* or *Install* subfolder.
-    * [ ] Create a release on GitHub: Open [tags on GitHub](https://github.com/Rhetos/Rhetos/tags),
-      at the tag for the newly released version click "Create release".
+    * [ ] Create a release on GitHub: Open [tags on GitHub](https://github.com/Rhetos/Rhetos/tags)
+      => At the tag for the newly released version click "Create release"
+      => **Check** that the opened form displays the tag you have just selected.
       * At *Describe this release* write:
         ```text
         See Release notes in [ChangeLog.md](https://github.com/Rhetos/Rhetos/blob/master/ChangeLog.md).
         Rhetos NuGet files are available at [nuget.org](https://www.nuget.org/packages?q=rhetos).
         ```
+      * [Rhetos v4 and earlier] Drag & drop the RhetosServer.x.zip file to the "**Attach binaries**" box.
       * Click "Publish release".
 4. Prepare the code for further development:
     * [ ] In *Build.bat* increase the second version number by 1 and set the third to 0
