@@ -1,5 +1,5 @@
 This article applies to Rhetos v5 and later versions.
-For older versions see the corresponding article for [Rhetos v4 and older](Releasing-a-new-Rhetos-version-v4.md).
+For older versions see the corresponding article for [Rhetos v4 and older](Releasing-a-new-Rhetos-version-v4).
 
 This article describes the release process for both **Rhetos framework** (<https://github.com/Rhetos/Rhetos>)
 and **Rhetos plugins** (most of the other repositories in <https://github.com/Rhetos>).
