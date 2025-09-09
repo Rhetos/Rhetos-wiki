@@ -7,7 +7,7 @@ It is a simplified example of a business application that manages different proc
 > OTHER VERSIONS OF RHETOS:
 This article applies to **Rhetos v3** and older versions.
 For newer versions see a corresponding article for
-[Rhetos v5](Creating-a-new-application-with-Rhetos-framework),
+[Rhetos v5 and later](Creating-a-new-application-with-Rhetos-framework),
 [Rhetos v4](Creating-new-WCF-Rhetos-application)
 or [Migrating from DeployPackages to Rhetos.MSBuild with Rhetos CLI](Migrating-from-DeployPackages-to-Rhetos-CLI).
 

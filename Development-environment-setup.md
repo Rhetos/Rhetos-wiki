@@ -4,7 +4,7 @@ This article describes how to setup the development environment for developing a
 
 > NOTE: This article applies to **Rhetos v3**.
 For newer versions see a corresponding article for
-[Rhetos v5](Creating-a-new-application-with-Rhetos-framework)
+[Rhetos v5 and later](Creating-a-new-application-with-Rhetos-framework)
 or [Rhetos v4](Creating-new-WCF-Rhetos-application)
 
 Table of contents:

@@ -35,9 +35,9 @@ Contents:
 
 ## Prerequisites
 
-1. Run `dotnet --version` in command prompt to check if you have **.NET 6 SDK** installed.
-   It should output 6.x.x.
-   If not, install the latest version of SDK from <https://dotnet.microsoft.com/download/dotnet/6.0>.
+1. Run `dotnet --list-sdks` in command prompt to check if you have **.NET 8 SDK** installed.
+   One of the output lines should start with 8.x.x.
+   If not, install the latest version of SDK from <https://dotnet.microsoft.com/download/dotnet/8.0>.
 
 ## Introduction: Rhetos DSL programming language
 
@@ -94,13 +94,15 @@ and some *parameters* after the keyword. Statements can be nested in other state
    a new Web API application and add Rhetos:
 
    ```batch
-   dotnet new webapi --framework net6.0
+   dotnet new webapi --framework net8.0
    dotnet add package Rhetos.Host
    dotnet add package Rhetos.Host.AspNet
    dotnet add package Rhetos.CommonConcepts
    dotnet add package Rhetos.MSBuild
    dotnet add package Microsoft.Extensions.Configuration
    ```
+
+   Note: For Rhetos v6 use net8.0, for Rhetos v5 use net6.0.
 
 3. Temporarily disable Rhetos database update, to simplify setup:
 
@@ -140,7 +142,7 @@ builder.Services.AddRhetosHost((serviceProvider, rhetosHostBuilder) => rhetosHos
 ```
 
 > NOTE:
-New ASP.NET 6 applications use "minimal hosting model" by default (i.e. there is no Startup.cs).
+New ASP.NET 6 and later applications use "minimal hosting model" by default (i.e. there is no Startup.cs).
 If your application uses a classic Startup class instead,
 adapt the code samples from this tutorial for your application
 by reviewing differences in [Code samples](https://docs.microsoft.com/en-us/aspnet/core/migration/50-to-60-samples?view=aspnetcore-6.0)
@@ -190,7 +192,7 @@ To apply the model to database we need to use `rhetos.exe` CLI tool.
 
 1. Run `dotnet build`
 
-2. In the binary output folder (`Bookstore.Service\bin\Debug\net6.0`) execute dbupdate command:
+2. In the binary output folder (`Bookstore.Service\bin\Debug\net8.0`) execute dbupdate command:
    `rhetos.exe dbupdate Bookstore.Service.dll`
 
 If you receive a database connection error, correct the connection string
@@ -199,7 +201,7 @@ and run the `dotnet build` again.
 After dbupdate executes successfully, verify that the table Bookstore.Book has been created in the database.
 
 Detailed log of `Rhetos DbUpdate` command is available in "Logs" subfolder,
-for example see `Bookstore.Service\bin\Debug\net6.0\Logs\RhetosCli.log`.
+for example see `Bookstore.Service\bin\Debug\net8.0\Logs\RhetosCli.log`.
 
 See [Rhetos CLI](Rhetos-CLI) article for more info on the utility commands.
 

@@ -148,7 +148,7 @@ This legacy feature copies files from referenced projects and NuGet packages:
 All files located in the Resources folder are copied to the current application's RhetosAssets folder.
 This feature is not enabled by default.
 
-Migration to Rhetos v5:
+Migration to Rhetos v5 and later:
 
 1. **Enable** copying "Resources" files from packages by setting `Rhetos:Build:BuildResourcesFolder`
    option to `true` in `rhetos-build.settings.json` file.

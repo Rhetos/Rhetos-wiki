@@ -2,10 +2,10 @@ This article is focused on the framework development.
 See [User authentication and authorization](User-authentication-and-authorization) article
 for more information on business application development.
 
-> This article applies to **Rhetos v4 and earlies** versions.
-On **Rhetos v5** and later versions, different authentication methods should be implemented
+> This article applies to **Rhetos v4 and earlier** versions.
+On **Rhetos v5 and later** versions, different authentication methods should be implemented
 in ASP.NET Core, while Rhetos should simply use the ASP.NET's authentication (with `AddAspNetCoreIdentityUser()`).
-Custom implementation of IUserInfo on Rhetos v5 is intended only for applications that do not use standard ASP.NET Core authentication middleware.
+Custom implementation of IUserInfo on Rhetos v5 and later versions is intended only for applications that do not use standard ASP.NET Core authentication middleware.
 
 ## Overview
 

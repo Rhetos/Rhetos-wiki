@@ -44,7 +44,7 @@ Example scenarios:
   be completed and the report returned to the client with a list of failed operations.
 * Running a simulated operation and retuning its result to the client, but not committing the results to the database.
 
-Rhetos v5:
+Rhetos v5 and later:
 
 ```cs
 // Resolve `Rhetos.IUnitOfWorkFactory unitOfWorkFactory` from dependency injection (usually as a constructor parameter).

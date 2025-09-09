@@ -17,7 +17,7 @@ test it, and later add some additional features in other tutorial articles.
 > OTHER VERSIONS OF RHETOS:
 This article applies to **Rhetos v4**.
 For other versions see a corresponding article for
-[Rhetos v5](Creating-a-new-application-with-Rhetos-framework),
+[Rhetos v5 and later](Creating-a-new-application-with-Rhetos-framework),
 [Rhetos v3](Create-your-first-Rhetos-application)
 or [Migrating from DeployPackages to Rhetos.MSBuild with Rhetos CLI](Migrating-from-DeployPackages-to-Rhetos-CLI).
 

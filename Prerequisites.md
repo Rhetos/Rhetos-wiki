@@ -16,20 +16,20 @@ Contents:
 Prerequisites for running applications with Rhetos framework:
 
 * Linux, Windows or macOS.
-  See [.NET 6 - Supported OS versions](https://github.com/dotnet/core/blob/main/release-notes/6.0/supported-os.md) for more details on versions and distributions.
-* [.NET 6 runtime](https://dotnet.microsoft.com/en-us/download).
-  Older versions of .NET Framework and .NET 5 are supported with [previous Rhetos versions](Previous-releases).
-* SQL Server 2008 or newer, Microsoft SQL Express, or Oracle Database 11g Release 2 or newer.
+  See [.NET 8 - Supported OS versions](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md) for more details on versions and distributions.
+* [.NET 8 runtime](https://dotnet.microsoft.com/en-us/download).
+  Older versions of .NET Framework and .NET Core are supported with [previous Rhetos versions](Previous-releases).
+* SQL Server 2008 or newer or Microsoft SQL Express. Additional database providers can be implemented as plugin extensions.
 
 ## Recommended application development environment
 
 There are no special prerequisites for development environment of Rhetos apps.
 Rhetos is distributed as a NuGet package, and it will work on any environment
-that supports development of .NET 5/.NET 6 applications on Linux, Windows or macOS.
+that supports development of .NET 8 applications on Linux, Windows or macOS.
 
 Tutorials in this wiki use the following development tools, as a recommended application development environment:
 
-* [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download).
+* [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download).
 * Visual Studio 2022 with Rhetos DSL IntelliSense, or a text editor with Rhetos DSL syntax highlighting (Visual Studio Code, SublimeText3 or Notepad++). See the setup in a following section.
 * [NuGet.exe](https://www.nuget.org/downloads) command-line utility, download and [add to the PATH](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/) environment variable.
 * [Git client](https://gitforwindows.org), installed and added to the PATH environment variable.

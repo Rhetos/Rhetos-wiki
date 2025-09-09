@@ -31,10 +31,9 @@ Contents:
 ### Using Visual Studio and automatic dbupdate
 
 Visual Studio is not required for development of Rhetos apps, but it can be helpful because
-there is a DSL IntelliSense extension available for VS.
+there is a DSL IntelliSense extension available for Visual Studio.
 
-1. Install Visual Studio 2022 or later, it is required for .NET 6 applications.
-   .NET 5 applications can be developed in Visual Studio 2019 and 2022.
+1. Install Visual Studio 2022 or later.
 
 2. Download and install **Rhetos DSL IntelliSense** for Visual Studio.
    See [Installation instructions](https://github.com/Rhetos/LanguageServices#installation).
@@ -249,7 +248,7 @@ See additional instructions in RestGenerator documentation in section
 Test the logging with the above configuration:
 
 * Run the application.
-  NLog should create the log file `Bookstore.Service\bin\Debug\net6.0\Logs\RhetosServer.log`.
+  NLog should create the log file `Bookstore.Service\bin\Debug\net8.0\Logs\RhetosServer.log`.
 
 ### Adding localization
 

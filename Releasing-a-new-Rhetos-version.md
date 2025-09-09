@@ -39,7 +39,7 @@ and **Rhetos plugins** (most of the other repositories in <https://github.com/Rh
       * Click "Publish release".
 4. Prepare the code for further development:
     * [ ] In *Build.bat* increase the second version number by 1 and set the third to 0
-          (for example from 1.2.5 to 1.3.0). Set the `Prelease` version to `auto`,
+          (for example from 1.2.5 to 1.3.0). Set the `Prerelease` version to `auto`,
           so that the source is ready for the development of the next release:
       ```text
       SET Version=<CURRENT +0.+1.0>

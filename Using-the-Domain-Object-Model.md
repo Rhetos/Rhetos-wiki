@@ -62,7 +62,7 @@ or create a "playground" console app in Visual Studio with ConsoleDump NuGet plu
    Select the latest version based on the .NET version of your application,
    see "[Supported frameworks](https://www.linqpad.net/Download.aspx)".
 2. Open the existing LINQPad script `Rhetos DOM.linq` from your application's binaries folder
-   (for example `Bookstore.Service\bin\Debug\net6.0\LinqPad\Rhetos DOM.linq`).
+   (for example `Bookstore.Service\bin\Debug\net8.0\LinqPad\Rhetos DOM.linq`).
 3. Run it with F5. It should print a few tables and end with "Done.".
 
 Notes:

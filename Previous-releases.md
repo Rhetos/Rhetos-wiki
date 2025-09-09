@@ -1,13 +1,22 @@
 # Previous major releases
 
 This article shows a *high-level* overview of past major releases.
-For *detailed_info* on previous releases, see the [Release notes](https://github.com/Rhetos/Rhetos/blob/master/ChangeLog.md).
+For *detailed info* on previous releases, see the [Release notes](https://github.com/Rhetos/Rhetos/blob/master/ChangeLog.md).
 
-## Rhetos 5: Migration to .NET 5/6
+## Rhetos 6
+
+* Support for new database providers and ORM providers, in a form of custom plugin extensions.
+  * Currently, only EF 6 with MS SQL Server is fully supported.
+  * EF Core is supported by Rhetos framework and CommonConcepts package, but it is not yet supported by all official Rhetos plugin packages.
+  * PostgreSQL support is in development.
+* Support for multitenant applications with separate database per tenant.
+* Update to .NET 8.
+
+## Rhetos 5: Migration from .NET Framework to .NET 5/6
 
 * Migrated from .NET Framework 4.7.2:
   * Rhetos 5.0 supports .NET 5 applications.
-  * Rhetos 5.1 supports .NET 5 and .NET 6.
+  * Rhetos 5.1 supports .NET 5 and .NET 6 applications.
 * Rhetos framework can be used in any type of C# project,
   from simple class libraries to ASP.NET Core web applications.
 * Rhetos apps can run on Windows, Linux and macOS.

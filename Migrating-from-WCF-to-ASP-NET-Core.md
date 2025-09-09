@@ -1,6 +1,6 @@
 # Migrating from WCF to ASP.NET Core
 
-Rhetos v5 is migrated to .NET 5, and it no longer supports WCF.
+Rhetos v5 has been migrated from .NET Framework to .NET 5, which means WCF is no longer supported.
 New Rhetos apps should use APS.NET Core instead.
 
 When migrating existing Rhetos application to APS.NET Core, the configuration in web.config should also be migrated.
@@ -16,7 +16,7 @@ Contents:
 
 ## Code sample - Configuring request size limits
 
-In *Program.cs* (.NET 6/7), add and call the following method when configuring `builder.Services`:
+In *Program.cs* (.NET 6 and later), add and call the following method when configuring `builder.Services`:
 
 ```cs
 static void ConfigureRequestSizeLimits(WebApplicationBuilder builder, int maxRequestBodySize, int maxUriLength)
@@ -60,7 +60,7 @@ see the example below.
       <handlers>
         <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModuleV2" resourceType="Unspecified" />
       </handlers>
-      <aspNetCore processPath="bin\Debug\net6.0\Bookstore.Service.exe" arguments="" stdoutLogEnabled="false" hostingModel="InProcess">
+      <aspNetCore processPath="bin\Debug\net8.0\Bookstore.Service.exe" arguments="" stdoutLogEnabled="false" hostingModel="InProcess">
         <environmentVariables>
           <environmentVariable name="ASPNETCORE_HTTPS_PORT" value="443" />
         </environmentVariables>

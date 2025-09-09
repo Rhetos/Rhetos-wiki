@@ -3,16 +3,16 @@
 This instructions are part of tutorial
 [Using the Domain Object Model](Using-the-Domain-Object-Model#option-b-creating-a-playground-console-app)
 
-The following steps show now to create a "playground" console app for .NET 6.
+The following steps show now to create a "playground" console app for .NET 8.
 
 1. In Visual Studio, in the same solution with the existing Rhetos application (Bookstore.Service),
     add a "Console App" C# project, named "Bookstore.Playground" located in the "Bookstore\test" subfolder,
-    with .NET 6 framework.
+    with .NET 8 framework.
 2. Add a project reference to the main Rhetos application:
    Project => Add Project Reference... => Check "Bookstore.Service" => OK.
 3. Project => Manage NuGet Packages... => Browse => search "ConsoleDump"
    => select the ConsoleDump package => Install => OK.
-4. Copy the content of the `Main` method from the `Bookstore.Service\bin\Debug\net6.0\LinqPad\Rhetos DOM.linq` script
+4. Copy the content of the `Main` method from the `Bookstore.Service\bin\Debug\net8.0\LinqPad\Rhetos DOM.linq` script
    into the Program.cs file of Bookstore.Playground project.
 5. Fix the compiler errors by adding the suggested "using" statement for each error.
    The resulting using statements should look like this:
@@ -27,7 +27,7 @@ The following steps show now to create a "playground" console app for .NET 6.
    with a relative or absolute path to the Rhetos application assembly,
    for example:
    ```cs
-   string rhetosHostAssemblyPath = @"..\..\..\..\..\src\Bookstore.Service\bin\Debug\net6.0\Bookstore.Service.dll";
+   string rhetosHostAssemblyPath = @"..\..\..\..\..\src\Bookstore.Service\bin\Debug\net8.0\Bookstore.Service.dll";
    ```
    For Rhetos v4, the path should reference the Bookstore.Service project folder, instead of the assembly in bin folder.
 7. Set Bookstore.Playground as startup project (Project => Set as Startup Project),
@@ -40,5 +40,5 @@ The following steps show now to create a "playground" console app for .NET 6.
 Notes:
 
 * The examples use the ConsoleDump's method `Dump()` to print the results in a table format.
-* An example of a similar playground app (for .NET 5) is part of the Bookstore demo application
+* An example of a similar playground app is part of the Bookstore demo application
   at <https://github.com/Rhetos/Bookstore/tree/master/test/Bookstore.Playground>.
