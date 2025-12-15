@@ -14,8 +14,7 @@ A package can also contain a complete business application.
 Table of contents:
 
 1. [How to create Rhetos package](#how-to-create-rhetos-package)
-2. [Example](#example)
-3. [See also](#see-also)
+2. [See also](#see-also)
 
 ## How to create Rhetos package
 
@@ -65,12 +64,6 @@ Here is a typical example of .nuspec file:
 ```
 
 Remove from this .nuspec file any files/src folders that you are not using in your plugin or application.
-
-## Example
-
-For a nuspec file that contains a complete Rhetos application,
-see the [Bookstore](https://github.com/Rhetos/Bookstore) example,
-file `src/Bookstore.nuspec`.
 
 ## See also
 
