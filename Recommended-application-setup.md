@@ -203,7 +203,7 @@ See additional instructions in RestGenerator documentation in section
 
 ### Use NLog to write application's system log into a file
 
-1. Add NuGet package `NLog.Web.AspNetCore`, select latest release of 4.x.x.
+1. Add NuGet package `NLog.Web.AspNetCore`, select latest release of 6.x.x.
 2. In Program.cs add `using NLog.Web;`
 3. Add `builder.Logging.ClearProviders(); builder.Host.UseNLog();` immediately after creating the `builder` instance.
 4. Extend the Rhetos services configuration (at `builder.Services.AddRhetosHost`)
