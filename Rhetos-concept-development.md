@@ -14,10 +14,11 @@ Table of contents:
 2. [How it works](#how-it-works)
 3. [How to write a macro concept](#how-to-write-a-macro-concept)
 4. [How to write a concept with code generator](#how-to-write-a-concept-with-code-generator)
-5. [How to deploy created concept](#how-to-deploy-created-concept)
-6. [Advanced topics](#advanced-topics)
+5. [Debugging custom Rhetos concepts at build-time](#debugging-custom-rhetos-concepts-at-build-time)
+6. [How to deploy created concept](#how-to-deploy-created-concept)
+7. [Advanced topics](#advanced-topics)
    1. [Dependency between code generators](#dependency-between-code-generators)
-7. [See also](#see-also)
+8. [See also](#see-also)
 
 ## What is Rhetos DSL concept
 
@@ -247,6 +248,20 @@ Entity Book
     Deactivatable { DeactivateOnDelete };
 }
 ```
+
+## Debugging custom Rhetos concepts at build-time
+
+To debug a macro concept or a code generator, you can add a **breakpoint** in the implementation of
+IConceptMacro or IConceptCodeGenerator and attach debugger to the 'rhetos build' command.
+
+How to attach the debugger:
+
+1. When building a Rhetos app, check the beginning of the build output for line `Rhetos Build: Started in C:\Users\<user>\.nuget\packages\rhetos.msbuild\<version>\tools\`.
+   This is location of Rhetos CLI.
+2. Open terminal in directory with the Rhetos app project (.csproj file) that has direct dependency to `Rhetos.MsBuild` NuGet package.
+3. Run the Rhetos CLI build command with pause to allow attaching the debugger: `C:\Users\<user>\.nuget\packages\rhetos.msbuild\<version>\tools\rhetos.exe --start-paused build .`
+4. In Visual Studio, with a breakpoint in the code generator or macro implementation, select Debug => Attach to Process... => select rhetos.exe in the list => Attach.
+5. Back in terminal, press any key to continue the build. The Visual Studio debugger will automatically stop at the breakpoint.
 
 ## How to deploy created concept
 

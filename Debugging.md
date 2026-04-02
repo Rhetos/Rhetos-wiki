@@ -6,8 +6,9 @@ is used in your application.
 Contents:
 
 1. [Debugging applications built with Rhetos CLI and Rhetos MSBuild integration](#debugging-applications-built-with-rhetos-cli-and-rhetos-msbuild-integration)
-2. [Debugging applications built with DeployPackages](#debugging-applications-built-with-deploypackages)
-3. [Tips and Tricks](#tips-and-tricks)
+2. [Debugging custom Rhetos concepts](#debugging-custom-rhetos-concepts)
+3. [Debugging applications built with DeployPackages](#debugging-applications-built-with-deploypackages)
+4. [Tips and Tricks](#tips-and-tricks)
 
 ## Debugging applications built with Rhetos CLI and Rhetos MSBuild integration
 
@@ -49,6 +50,11 @@ Steps:
         click the thread icon next to the warning.
 
 See [Tips and Tricks](#tips-and-tricks) section below for more information on how to simplify debugging.
+
+## Debugging custom Rhetos concepts
+
+For debugging custom Rhetos concepts (a macro concept or a code generator), see
+[Debugging custom Rhetos concepts at build-time](Rhetos-concept-development#debugging-custom-rhetos-concepts-at-build-time).
 
 ## Debugging applications built with DeployPackages
 
