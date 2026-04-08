@@ -1,4 +1,4 @@
-# Unit of work and database transactions
+# Unit of work scope and database transactions
 
 Unit of work represents one or more operations grouped together so that they are
 either all executed successfully, or all canceled.
@@ -78,6 +78,53 @@ using (var scope = new Rhetos.TransactionScopeContainer(container))
 
     // Commit the unit of work transaction, otherwise it will be rolled back by default.
     scope.CommitChanges();
+}
+```
+
+Make sure to avoid writing anything to the database from the *main* scope before creating the *inner* scope:
+
+* If the inner scope writes to the same table as the main scope (for example, Common.Log table),
+  it might cause db lock errors in the inner scope.
+* If the inner scope reads the data that the main scope has written, it will either read the obsolete data
+  (if the snapshot isolation is enabled in database) or fail with db lock error.
+
+A good pattern for using inner scopes if the following:
+
+```cs
+Action SendDocuments '(parameters, repository, userInfo) => SendDocumentsOneByOne(parameter.DocumentIds)' { ... }
+...
+
+public void SendDocumentsOneByOne(List<Guid> documentIds)
+{
+    var documents = _domRepository.My.Documents.Load(documentIds); // Reading data from main scope will not create database locks to block the inner scopes.
+    foreach (var document in documents)
+    {
+        try
+        {
+            using (var scope = unitOfWorkFactory.CreateScope())
+            {
+                var repository = scope.Resolve<Common.DomRepository>();
+                ... process the documents or send them to some external system ...
+                ... make sure not to use anything for the main scope, such as _domRepository
+                scope.CommitAndClose();
+            }
+        }
+        catch (Exception ex)
+        {
+            using (var scope = unitOfWorkFactory.CreateScope())
+            {
+                var repository = scope.Resolve<Common.DomRepository>();
+                repository.Common.AddToLog.Execute(new Common.AddToLog
+                {
+                    Action = "SendDocumentsOneByOne Error",
+                    TableName = "My.Document",
+                    ItemId = document.ID,
+                    Description = ex.ToString()
+                });
+                scope.CommitAndClose();
+            }
+        }
+    }
 }
 ```
 

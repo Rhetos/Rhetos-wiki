@@ -62,7 +62,7 @@ Fundamentals:
 * [Data migration](Data-migration)
 * [Logging](Logging)
 * [Debugging](Debugging)
-* [Unit of work and database transactions](Unit-of-work)
+* [Unit of work scope and database transactions](Unit-of-work)
 * [Rhetos coding standard](Rhetos-coding-standard)
 
 Support:
